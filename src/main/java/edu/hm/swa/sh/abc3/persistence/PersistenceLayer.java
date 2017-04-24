@@ -14,6 +14,7 @@ public interface PersistenceLayer {
      * Persist a new book.
      *
      * @param book Book to store.
+     * @throws IdentifierAlreadyExsists if ISBN already exists.
      */
     void storeBook(Book book) throws IdentifierAlreadyExsists;
 
@@ -23,7 +24,7 @@ public interface PersistenceLayer {
      * @param isbn ISBN of book to find.
      * @return Book or null if no book was found.
      */
-    Book getBook(String isbn) throws NullPointerException;
+    Book getBook(String isbn);
 
     /**
      * Return all books.
@@ -36,6 +37,8 @@ public interface PersistenceLayer {
      * Update a single book.
      *
      * @param book Book to update.
+     * @throws IdentifierIsMissingException if book has no ISBN number.
+     * @throws InvalidIdentifierException   if book not exists yet.
      */
     void updateBook(Book book) throws IdentifierIsMissingException, InvalidIdentifierException;
 
@@ -43,6 +46,7 @@ public interface PersistenceLayer {
      * Persist a new disc.
      *
      * @param disc Disc to store.
+     * @throws IdentifierAlreadyExsists barcode of disc already exists.
      */
     void storeDisc(Disc disc) throws IdentifierAlreadyExsists;
 
@@ -65,6 +69,8 @@ public interface PersistenceLayer {
      * Update information about a disc.
      *
      * @param disc Disc to update.
+     * @throws IdentifierIsMissingException if disc has no barcode.
+     * @throws InvalidIdentifierException   if disc not exists yet.
      */
     void updateDisc(Disc disc) throws IdentifierIsMissingException, InvalidIdentifierException;
 }
