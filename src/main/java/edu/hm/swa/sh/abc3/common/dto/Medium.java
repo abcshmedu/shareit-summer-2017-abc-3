@@ -1,8 +1,5 @@
-package edu.hm.swa.sh.abc3.common;
+package edu.hm.swa.sh.abc3.common.dto;
 
-/**
- * Created by Sebastian on 21.04.2017.
- */
 public class Medium {
     private final String title;
 

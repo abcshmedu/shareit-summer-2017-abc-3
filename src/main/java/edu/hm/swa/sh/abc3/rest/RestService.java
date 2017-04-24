@@ -1,14 +1,15 @@
-package edu.hm.swa.sh.abc3.service.rest;
+package edu.hm.swa.sh.abc3.rest;
 
-import edu.hm.swa.sh.abc3.common.Book;
-import edu.hm.swa.sh.abc3.common.Disc;
-import edu.hm.swa.sh.abc3.common.Medium;
-import edu.hm.swa.sh.abc3.logic.MediaService;
+import edu.hm.swa.sh.abc3.common.dto.Book;
+import edu.hm.swa.sh.abc3.common.dto.Disc;
 import edu.hm.swa.sh.abc3.common.MediaServiceResult;
+import edu.hm.swa.sh.abc3.common.dto.Medium;
+import edu.hm.swa.sh.abc3.buisness.MediaService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Service outbound implementation.
@@ -30,8 +31,11 @@ public class RestService {
      */
     @Path("books")
     @POST
-    public MediaServiceResult addBook(final Book book) {
-        return null;
+    public Response addBook(final Book book) {
+        final MediaServiceResult result = mediaService.addBook(book);
+        return Response
+                .status(result.getCode())
+                .build();
     }
 
     /**
