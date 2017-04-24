@@ -3,8 +3,8 @@ package edu.hm.swa.sh.abc3.service.rest;
 import edu.hm.swa.sh.abc3.common.Book;
 import edu.hm.swa.sh.abc3.common.Disc;
 import edu.hm.swa.sh.abc3.common.Medium;
-import edu.hm.swa.sh.abc3.service.MediaService;
-import edu.hm.swa.sh.abc3.service.MediaServiceResult;
+import edu.hm.swa.sh.abc3.logic.MediaService;
+import edu.hm.swa.sh.abc3.common.MediaServiceResult;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

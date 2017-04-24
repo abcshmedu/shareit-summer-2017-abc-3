@@ -1,4 +1,4 @@
-package edu.hm.swa.sh.abc3.service;
+package edu.hm.swa.sh.abc3.common;
 
 /**
  *

@@ -1,8 +1,9 @@
-package edu.hm.swa.sh.abc3.service;
+package edu.hm.swa.sh.abc3.logic;
 
 import edu.hm.swa.sh.abc3.common.Book;
 import edu.hm.swa.sh.abc3.common.Disc;
 import edu.hm.swa.sh.abc3.common.Medium;
+import edu.hm.swa.sh.abc3.common.MediaServiceResult;
 
 /**
  * Created by Sebastian on 21.04.2017.
