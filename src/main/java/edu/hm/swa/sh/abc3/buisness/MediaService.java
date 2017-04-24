@@ -3,7 +3,7 @@ package edu.hm.swa.sh.abc3.buisness;
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
 import edu.hm.swa.sh.abc3.common.dto.Medium;
-import edu.hm.swa.sh.abc3.common.MediaServiceResult;
+import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExsistsException;
 
 /**
  * Interface of MediaService.
@@ -12,16 +12,14 @@ public interface MediaService {
     /**
      * Add a new Book.
      * @param book Book to add.
-     * @return result of creation.
      */
-    MediaServiceResult addBook(Book book);
+    void addBook(Book book) throws IdentifierAlreadyExsistsException;
 
     /**
      * Add new Disc.
      * @param disc to add.
-     * @return result of creation.
      */
-    MediaServiceResult addDisc(Disc disc);
+    void addDisc(Disc disc);
 
     /**
      * Get all books.
@@ -52,14 +50,12 @@ public interface MediaService {
     /**
      * Update a book.
      * @param book updated information of book.
-     * @return result of update.
      */
-    MediaServiceResult updateBooks(Book book);
+    void updateBooks(Book book);
 
     /**
      * Update a disc.
      * @param disc update information of disc.
-     * @return result of update.
      */
-    MediaServiceResult updateDisc(Disc disc);
+    void updateDisc(Disc disc);
 }

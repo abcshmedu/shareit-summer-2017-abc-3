@@ -3,7 +3,7 @@ package edu.hm.swa.sh.abc3.common.exception;
 /**
  * Exception if ISBN already stored.
  */
-public class IdentifierAlreadyExsists extends Exception {
+public class IdentifierAlreadyExsistsException extends Exception {
     private final String message;
 
     /**
@@ -11,7 +11,7 @@ public class IdentifierAlreadyExsists extends Exception {
      *
      * @param message Exception message.
      */
-    public IdentifierAlreadyExsists(final String message) {
+    public IdentifierAlreadyExsistsException(final String message) {
         super(message);
         this.message = message;
     }

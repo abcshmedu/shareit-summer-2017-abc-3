@@ -2,7 +2,6 @@ package edu.hm.swa.sh.abc3.rest;
 
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
-import edu.hm.swa.sh.abc3.common.MediaServiceResult;
 import edu.hm.swa.sh.abc3.common.dto.Medium;
 import edu.hm.swa.sh.abc3.buisness.MediaService;
 

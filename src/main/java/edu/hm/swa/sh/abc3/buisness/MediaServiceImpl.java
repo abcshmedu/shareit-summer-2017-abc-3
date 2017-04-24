@@ -2,21 +2,26 @@ package edu.hm.swa.sh.abc3.buisness;
 
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
-import edu.hm.swa.sh.abc3.common.MediaServiceResult;
 import edu.hm.swa.sh.abc3.common.dto.Medium;
+import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExsistsException;
+import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
+
+import javax.inject.Inject;
 
 /**
  * Implementation of MediaService.
  */
 public class MediaServiceImpl implements MediaService {
+    @Inject
+    private PersistenceLayer persistenceLayer;
 
     @Override
-    public MediaServiceResult addBook(Book book) {
-        return null;
+    public void addBook(final Book book) throws IdentifierAlreadyExsistsException {
+        persistenceLayer.storeBook(book);
     }
 
     @Override
-    public MediaServiceResult addDisc(Disc disc) {
+    public void addDisc(Disc disc) {
         return null;
     }
 
@@ -41,12 +46,12 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public MediaServiceResult updateBooks(Book book) {
+    public void updateBooks(Book book) {
         return null;
     }
 
     @Override
-    public MediaServiceResult updateDisc(Disc disc) {
+    public void updateDisc(Disc disc) {
         return null;
     }
 }

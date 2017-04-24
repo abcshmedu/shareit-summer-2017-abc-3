@@ -2,7 +2,7 @@ package edu.hm.swa.sh.abc3.persistence;
 
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
-import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExsists;
+import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExsistsException;
 import edu.hm.swa.sh.abc3.common.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.common.exception.InvalidIdentifierException;
 
@@ -14,9 +14,9 @@ public interface PersistenceLayer {
      * Persist a new book.
      *
      * @param book Book to store.
-     * @throws IdentifierAlreadyExsists if ISBN already exists.
+     * @throws IdentifierAlreadyExsistsException if ISBN already exists.
      */
-    void storeBook(Book book) throws IdentifierAlreadyExsists;
+    void storeBook(Book book) throws IdentifierAlreadyExsistsException;
 
     /**
      * Find a single book.
@@ -46,9 +46,9 @@ public interface PersistenceLayer {
      * Persist a new disc.
      *
      * @param disc Disc to store.
-     * @throws IdentifierAlreadyExsists barcode of disc already exists.
+     * @throws IdentifierAlreadyExsistsException barcode of disc already exists.
      */
-    void storeDisc(Disc disc) throws IdentifierAlreadyExsists;
+    void storeDisc(Disc disc) throws IdentifierAlreadyExsistsException;
 
     /**
      * Find a single Disc by its barcode.

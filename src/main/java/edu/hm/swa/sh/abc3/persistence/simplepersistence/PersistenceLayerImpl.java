@@ -2,7 +2,7 @@ package edu.hm.swa.sh.abc3.persistence.simplepersistence;
 
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
-import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExsists;
+import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExsistsException;
 import edu.hm.swa.sh.abc3.common.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.common.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
@@ -32,9 +32,9 @@ public class PersistenceLayerImpl implements PersistenceLayer {
     private Map<String, Disc> discs = new HashMap<>();
 
     @Override
-    public void storeBook(final Book book) throws IdentifierAlreadyExsists {
+    public void storeBook(final Book book) throws IdentifierAlreadyExsistsException {
         if (books.get(book.getIsbn()) != null) {
-            throw new IdentifierAlreadyExsists("ISBN already exists.");
+            throw new IdentifierAlreadyExsistsException("ISBN already exists.");
         }
         books.put(book.getIsbn(), book);
     }
@@ -69,9 +69,9 @@ public class PersistenceLayerImpl implements PersistenceLayer {
     }
 
     @Override
-    public void storeDisc(final Disc disc) throws IdentifierAlreadyExsists {
+    public void storeDisc(final Disc disc) throws IdentifierAlreadyExsistsException {
         if (discs.get(disc.getBarcode()) != null) {
-            throw new IdentifierAlreadyExsists("Barcode already exists.");
+            throw new IdentifierAlreadyExsistsException("Barcode already exists.");
         }
         discs.put(disc.getBarcode(), disc);
     }
