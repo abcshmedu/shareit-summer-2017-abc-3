@@ -3,8 +3,6 @@ package edu.hm.swa.sh.abc3.rest.transformer;
 
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.rest.types.BookType;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import javax.ejb.Stateless;
 
@@ -13,41 +11,6 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class BookTransformer {
-
-    /**
-     * Transform a book to a JSONObject.
-     *
-     * @param book book to transform.
-     * @return JSONObject of a book.
-     */
-    public JSONObject toJSONObject(final Book book) {
-        final JSONObject result = new JSONObject();
-        if (book != null) {
-            result.put("title", book.getTitle());
-            result.put("author", book.getAuthor());
-            result.put("isbn", book.getIsbn());
-        }
-        return result;
-    }
-
-    /**
-     * Transform a book array to a JSONObject.
-     *
-     * @param books book array.
-     * @return JSONObject of book array.
-     */
-    public JSONObject toJSONObject(final Book[] books) {
-        final JSONObject result = new JSONObject();
-        final JSONArray resultArray = new JSONArray();
-        if (books != null && books.length > 1) {
-
-            for (final Book singleBook : books) {
-                resultArray.put(toJSONObject(singleBook));
-            }
-        }
-        result.put("book", resultArray);
-        return result;
-    }
 
     /**
      * Transform a booktype to a book dto.

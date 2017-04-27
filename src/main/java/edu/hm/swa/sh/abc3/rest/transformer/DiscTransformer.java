@@ -1,48 +1,54 @@
 package edu.hm.swa.sh.abc3.rest.transformer;
 
 import edu.hm.swa.sh.abc3.common.dto.Disc;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import edu.hm.swa.sh.abc3.rest.types.DiscType;
 
 import javax.ejb.Stateless;
 
 /**
- * Transform Disc to JSONObject.
+ * Transform Disc.
  */
 @Stateless
 public class DiscTransformer {
     /**
-     * Transform a disc to a JSONObject.
+     * Transform a discType to a Disc dto.
+     *
+     * @param discType Disctype.
+     * @return DiscDTO.
+     */
+    public Disc toDisc(final DiscType discType) {
+        return new Disc(discType.getTitle(), discType.getBarcode(), discType.getDirector(), discType.getFsk());
+    }
+
+    /**
+     * Transform a disc to DiscType.
      *
      * @param disc disc to transform.
-     * @return JSONObject of a disc.
+     * @return DiscType of a disc.
      */
-    public JSONObject toJSONObject(final Disc disc) {
-        final JSONObject result = new JSONObject();
+    public DiscType toDiscType(final Disc disc) {
+        final DiscType result = new DiscType();
         if (disc != null) {
-            result.put("title", disc.getTitle());
-            result.put("director", disc.getDirector());
-            result.put("barcode", disc.getBarcode());
+            result.setBarcode(disc.getBarcode());
+            result.setDirector(disc.getDirector());
+            result.setTitle(disc.getTitle());
         }
         return result;
     }
 
     /**
-     * Transform a disc array to a JSONObject.
+     * Transform a disc array to a DiscType array.
      *
-     * @param disc disc array.
-     * @return JSONObject of disc array.
+     * @param discs disc array.
+     * @return DiscType of disc array.
      */
-    public JSONObject toJSONObject(final Disc[] disc) {
-        final JSONObject result = new JSONObject();
-        final JSONArray resultArray = new JSONArray();
-        if (disc != null && disc.length > 1) {
+    public DiscType[] toDiscTypeArray(final Disc[] discs) {
+        final DiscType[] result = new DiscType[discs.length];
 
-            for (final Disc singleDisc : disc) {
-                resultArray.put(toJSONObject(singleDisc));
-            }
+        for (int index = 0; index < discs.length; index++) {
+            result[index] = toDiscType(discs[index]);
         }
-        result.put("disc", resultArray);
+
         return result;
     }
 }

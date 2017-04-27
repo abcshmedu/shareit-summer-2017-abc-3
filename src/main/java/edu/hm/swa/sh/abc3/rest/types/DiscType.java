@@ -13,6 +13,7 @@ public class DiscType {
     private String title;
     private String director;
     private String barcode;
+    private int fsk;
 
     /**
      * Returns the Title.
@@ -62,4 +63,19 @@ public class DiscType {
         this.barcode = barcode;
     }
 
+    /**
+     * Returns the FSK.
+     * @return FSK.
+     */
+    public int getFsk() {
+        return fsk;
+    }
+
+    /**
+     * Sets the FSK.
+     * @param fsk FSK.
+     */
+    public void setFsk(int fsk) {
+        this.fsk = fsk;
+    }
 }
