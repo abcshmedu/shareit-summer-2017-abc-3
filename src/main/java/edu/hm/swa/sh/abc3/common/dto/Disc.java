@@ -1,13 +1,21 @@
 package edu.hm.swa.sh.abc3.common.dto;
 
 /**
- * Created by Sebastian on 21.04.2017.
+ * Disc DTO.
  */
 public class Disc extends Medium {
     private final String barcode;
     private final String director;
     private final int fsk;
 
+    /**
+     * Cstr.
+     *
+     * @param title    Title of disc.
+     * @param barcode  Barcode of disc.
+     * @param director Director of disc.
+     * @param fsk      FSK of disc.
+     */
     public Disc(final String title, final String barcode, final String director, final int fsk) {
         super(title);
         this.barcode = barcode;
@@ -15,29 +23,49 @@ public class Disc extends Medium {
         this.fsk = fsk;
     }
 
+    /**
+     * Returns the Barcode.
+     *
+     * @return Barcode.
+     */
     public String getBarcode() {
         return barcode;
     }
 
+    /**
+     * Returns the director.
+     *
+     * @return Director.
+     */
     public String getDirector() {
         return director;
     }
 
+    /**
+     * Returns the FSK of disc.
+     *
+     * @return FSK.
+     */
     public int getFsk() {
         return fsk;
     }
 
     @Override
     public boolean equals(final Object other) {
-        if (this == other) return true;
-        if (other == null || getClass() != other.getClass()) return false;
-        if (!super.equals(other)) return false;
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false;
+        }
+        if (!super.equals(other)) {
+            return false;
+        }
 
-        Disc disc = (Disc) other;
+        final Disc disc = (Disc) other;
 
-        if (fsk != disc.fsk) return false;
-        if (!barcode.equals(disc.barcode)) return false;
-        return director != null ? director.equals(disc.director) : disc.director == null;
+        return fsk == disc.fsk && barcode.equals(disc.barcode) && (director != null ? director.equals(disc.director)
+                : disc.director == null);
     }
 
     @Override
@@ -51,10 +79,10 @@ public class Disc extends Medium {
 
     @Override
     public String toString() {
-        return "Disc{" +
-                "barcode='" + barcode + '\'' +
-                ", director='" + director + '\'' +
-                ", fsk=" + fsk +
-                '}';
+        return "Disc{"
+                + "barcode='" + barcode + '\''
+                + ", director='" + director + '\''
+                + ", fsk=" + fsk
+                + '}';
     }
 }
