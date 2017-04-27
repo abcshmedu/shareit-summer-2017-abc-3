@@ -6,6 +6,7 @@ import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
 
 import javax.ejb.Local;
 import javax.ejb.Singleton;
+import javax.enterprise.context.ApplicationScoped;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -16,8 +17,7 @@ import java.util.Set;
  * Objects stored in HashMap instead in database.
  * I know, very simple but for the first step enough I think.
  */
-@Local
-@Singleton(mappedName = "PersistenceLayer", name = "PersistenceLayer")
+@ApplicationScoped
 public class PersistenceLayerBean implements PersistenceLayer {
     /**
      * HashMap for books, the key is the ISBN.

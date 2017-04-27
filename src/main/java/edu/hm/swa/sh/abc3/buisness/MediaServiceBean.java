@@ -23,7 +23,7 @@ import javax.inject.Inject;
 @Local
 @Stateless(mappedName = "MediaService", name = "MediaService")
 public class MediaServiceBean implements MediaService {
-    @EJB
+    @Inject
     private PersistenceLayer persistenceLayer;
     @Inject
     private IdentifierValidator identifierValidator;
