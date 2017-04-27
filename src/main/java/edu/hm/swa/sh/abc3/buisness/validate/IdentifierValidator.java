@@ -28,7 +28,7 @@ public class IdentifierValidator {
         if (cleanedIdentifier.length() == IDENTIFIER_LENGTH) {
             int sum = 0;
             for (int index = 0; index < IDENTIFIER_LENGTH; index++) {
-                final int singleInt = Integer.parseInt(String.valueOf(identifier.charAt(index)));
+                final int singleInt = Integer.parseInt(String.valueOf(cleanedIdentifier.charAt(index)));
                 sum += (singleInt * Math.pow(IDENTIFIER_MULTYPLIER, (index) % 2));
             }
             return (sum % IDENTIFIER_MODULO) == 0;

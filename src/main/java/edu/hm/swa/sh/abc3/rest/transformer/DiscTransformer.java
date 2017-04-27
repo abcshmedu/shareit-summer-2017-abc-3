@@ -32,6 +32,7 @@ public class DiscTransformer {
             result.setBarcode(disc.getBarcode());
             result.setDirector(disc.getDirector());
             result.setTitle(disc.getTitle());
+            result.setFsk(disc.getFsk());
         }
         return result;
     }
