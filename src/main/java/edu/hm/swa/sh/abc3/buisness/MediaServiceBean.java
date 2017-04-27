@@ -1,6 +1,6 @@
 package edu.hm.swa.sh.abc3.buisness;
 
-import edu.hm.swa.sh.abc3.buisness.validate.ISBNValidator;
+import edu.hm.swa.sh.abc3.buisness.validate.IdentifierValidator;
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
 import edu.hm.swa.sh.abc3.common.exception.AuthorIsMissingException;
@@ -11,12 +11,10 @@ import edu.hm.swa.sh.abc3.common.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.common.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.common.exception.TitleIsMissingException;
 import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
-import edu.hm.swa.sh.abc3.persistence.simplepersistence.PersistenceLayerBean;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 /**
@@ -28,7 +26,7 @@ public class MediaServiceBean implements MediaService {
     @EJB
     private PersistenceLayer persistenceLayer;
     @Inject
-    private ISBNValidator isbnValidator;
+    private IdentifierValidator identifierValidator;
 
     @Override
     public void addBook(final Book book) throws IdentifierAlreadyExistsException, InvalidIdentifierException,
@@ -37,7 +35,7 @@ public class MediaServiceBean implements MediaService {
         final String author = book.getAuthor();
         final String title = book.getTitle();
 
-        if (isbn == null || !isbnValidator.checkISBN(isbn)) {
+        if (isbn == null || !identifierValidator.checkIdentifier(isbn)) {
             throw new InvalidIdentifierException("ISBN number is not valid.");
         }
         if (author == null || author.length() < 1) {
