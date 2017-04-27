@@ -4,7 +4,6 @@ package edu.hm.swa.sh.abc3.common.exception;
  * Exception if ISBN is invalid.
  */
 public class InvalidIdentifierException extends BaseException {
-    private static final int ERROR_CODE = -140;
     private final String message;
 
     /**
@@ -13,7 +12,7 @@ public class InvalidIdentifierException extends BaseException {
      * @param message Exception message.
      */
     public InvalidIdentifierException(final String message) {
-        super(message, ERROR_CODE);
+        super(message, ErrorCodes.IDENTIFIER_INVALID.getErrorCode());
         this.message = message;
     }
 

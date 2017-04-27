@@ -4,7 +4,6 @@ package edu.hm.swa.sh.abc3.common.exception;
  * Exception if author is missing.
  */
 public class AuthorIsMissingException extends BaseException {
-    private static final int ERROR_CODE = -100;
     private final String message;
     /**
      * Constructor.
@@ -12,7 +11,7 @@ public class AuthorIsMissingException extends BaseException {
      * @param message Exception message.
      */
     public AuthorIsMissingException(final String message) {
-        super(message, ERROR_CODE);
+        super(message, ErrorCodes.AUTHOR_MISSING.getErrorCode());
         this.message = message;
     }
 

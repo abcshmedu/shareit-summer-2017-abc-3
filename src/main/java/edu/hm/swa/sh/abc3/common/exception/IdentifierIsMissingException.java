@@ -4,7 +4,6 @@ package edu.hm.swa.sh.abc3.common.exception;
  * Exception if identifier is missing.
  */
 public class IdentifierIsMissingException extends BaseException {
-    private static final int ERROR_CODE = -130;
     private final String message;
 
     /**
@@ -13,7 +12,7 @@ public class IdentifierIsMissingException extends BaseException {
      * @param message Exception message.
      */
     public IdentifierIsMissingException(final String message) {
-        super(message, ERROR_CODE);
+        super(message, ErrorCodes.IDENTIFIER_MISSING.getErrorCode());
         this.message = message;
     }
 
