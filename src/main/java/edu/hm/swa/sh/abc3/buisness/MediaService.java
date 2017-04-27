@@ -19,9 +19,9 @@ public interface MediaService {
      *
      * @param book Book to add.
      * @throws IdentifierAlreadyExistsException If already a book with same ISBN stored.
-     * @throws InvalidIdentifierException        If ISBN number is invalid.
-     * @throws AuthorIsMissingException          If the book author is missing.
-     * @throws TitleIsMissingException           If the book title is missing.
+     * @throws InvalidIdentifierException       If ISBN number is invalid.
+     * @throws AuthorIsMissingException         If the book author is missing.
+     * @throws TitleIsMissingException          If the book title is missing.
      */
     void addBook(Book book) throws IdentifierAlreadyExistsException, InvalidIdentifierException,
             AuthorIsMissingException, TitleIsMissingException;
@@ -30,8 +30,8 @@ public interface MediaService {
      * Add new Disc.
      *
      * @param disc to add.
-     * @throws InvalidIdentifierException        If disc barcode is missing.
-     * @throws DirectorIsMissingException        If disc director is missing.
+     * @throws InvalidIdentifierException       If disc barcode is missing.
+     * @throws DirectorIsMissingException       If disc director is missing.
      * @throws IdentifierAlreadyExistsException If already a disc is persisted with same barcode.
      */
     void addDisc(Disc disc) throws InvalidIdentifierException, DirectorIsMissingException,
@@ -72,8 +72,8 @@ public interface MediaService {
      *
      * @param isbn isbn of book to update.
      * @param book updated information of book.
-     * @throws IdentifierIsMissingException If ISBN number is missing.
-     * @throws InvalidIdentifierException   If no book with this ISBN number exists.
+     * @throws IdentifierIsMissingException   If ISBN number is missing.
+     * @throws InvalidIdentifierException     If no book with this ISBN number exists.
      * @throws IdentifierIsImmutableException If trying to change ISBN number.
      */
     void updateBook(String isbn, Book book) throws IdentifierIsMissingException, InvalidIdentifierException,
@@ -82,9 +82,10 @@ public interface MediaService {
     /**
      * Update a disc.
      *
-     * @param disc update information of disc.
-     * @throws IdentifierIsMissingException If disc barcode is missing.
-     * @throws InvalidIdentifierException   If no disc with this barcode exists.
+     * @param disc    update information of disc.
+     * @param barcode Barcode of disc which should be updated.
+     * @throws IdentifierIsMissingException   If disc barcode is missing.
+     * @throws InvalidIdentifierException     If no disc with this barcode exists.
      * @throws IdentifierIsImmutableException If barcode and barcode of disc didn't match.
      */
     void updateDisc(String barcode, Disc disc) throws IdentifierIsMissingException, InvalidIdentifierException,
