@@ -62,6 +62,9 @@ public class MediaServiceBean implements MediaService {
         if (director == null || director.length() < 1) {
             throw new DirectorIsMissingException("Disc director is missing.");
         }
+        if (persistenceLayer.getDisc(disc.getBarcode()) != null) {
+            throw new IdentifierAlreadyExistsException("Barcode already exists.");
+        }
         persistenceLayer.storeDisc(disc);
     }
 
@@ -103,7 +106,18 @@ public class MediaServiceBean implements MediaService {
     }
 
     @Override
-    public void updateDisc(final Disc disc) throws IdentifierIsMissingException, InvalidIdentifierException {
-        persistenceLayer.updateDisc(disc);
+    public void updateDisc(final String barcode, final Disc disc)
+            throws IdentifierIsMissingException, InvalidIdentifierException, IdentifierIsImmutableException {
+        if (barcode == null || "".equals(barcode)) {
+            throw new IdentifierIsMissingException("Parameter 'barcode' should not be null or empty.");
+        }
+        final Disc oldDisc = getDisc(barcode);
+        if (oldDisc == null) {
+            throw new InvalidIdentifierException("Disc does not exist");
+        }
+        if (!barcode.equals(disc.getBarcode())) {
+            throw new IdentifierIsImmutableException("Barcode of disc can not be changed.");
+        }
+        persistenceLayer.updateDisc(barcode, disc);
     }
 }

@@ -2,9 +2,6 @@ package edu.hm.swa.sh.abc3.persistence.simplepersistence;
 
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
-import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExistsException;
-import edu.hm.swa.sh.abc3.common.exception.IdentifierIsMissingException;
-import edu.hm.swa.sh.abc3.common.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
 
 import javax.ejb.Local;
@@ -65,16 +62,16 @@ public class PersistenceLayerBean implements PersistenceLayer {
     }
 
     @Override
-    public void storeDisc(final Disc disc) throws IdentifierAlreadyExistsException {
-        if (discs.get(disc.getBarcode()) != null) {
-            throw new IdentifierAlreadyExistsException("Barcode already exists.");
-        }
+    public void storeDisc(final Disc disc) {
         discs.put(disc.getBarcode(), disc);
+        System.out.println("Disc stored: " + disc);
     }
 
     @Override
     public Disc getDisc(final String barcode) {
-        return discs.get(barcode);
+        final Disc result = discs.get(barcode);
+        System.out.println("Found disc: " + result);
+        return result;
     }
 
     @Override
@@ -87,19 +84,13 @@ public class PersistenceLayerBean implements PersistenceLayer {
             result[index] = ((Disc) entry.getValue());
             index++;
         }
-
+        System.out.println("Found discs: " + result);
         return result;
     }
 
     @Override
-    public void updateDisc(final Disc disc) throws IdentifierIsMissingException, InvalidIdentifierException {
-        final String barcode = disc.getBarcode();
-        if (barcode == null || "".equals(barcode)) {
-            throw new IdentifierIsMissingException("Parameter 'isbn' should not be null or empty.");
-        }
-        if (getDisc(barcode) == null) {
-            throw new InvalidIdentifierException("Book does not exist");
-        }
+    public void updateDisc(final String barcode, final Disc disc) {
         discs.put(barcode, disc);
+        System.out.println("Updated disc with barcode '" + barcode + "' to " + disc);
     }
 }

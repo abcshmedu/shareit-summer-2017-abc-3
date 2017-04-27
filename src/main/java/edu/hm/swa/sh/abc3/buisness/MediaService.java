@@ -85,6 +85,8 @@ public interface MediaService {
      * @param disc update information of disc.
      * @throws IdentifierIsMissingException If disc barcode is missing.
      * @throws InvalidIdentifierException   If no disc with this barcode exists.
+     * @throws IdentifierIsImmutableException If barcode and barcode of disc didn't match.
      */
-    void updateDisc(Disc disc) throws IdentifierIsMissingException, InvalidIdentifierException;
+    void updateDisc(String barcode, Disc disc) throws IdentifierIsMissingException, InvalidIdentifierException,
+            IdentifierIsImmutableException;
 }

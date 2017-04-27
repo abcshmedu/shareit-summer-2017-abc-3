@@ -2,9 +2,6 @@ package edu.hm.swa.sh.abc3.persistence;
 
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
-import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExistsException;
-import edu.hm.swa.sh.abc3.common.exception.IdentifierIsMissingException;
-import edu.hm.swa.sh.abc3.common.exception.InvalidIdentifierException;
 
 /**
  * Interface of ShareIt persistence layer.
@@ -44,9 +41,8 @@ public interface PersistenceLayer {
      * Persist a new disc.
      *
      * @param disc Disc to store.
-     * @throws IdentifierAlreadyExistsException barcode of disc already exists.
      */
-    void storeDisc(Disc disc) throws IdentifierAlreadyExistsException;
+    void storeDisc(Disc disc);
 
     /**
      * Find a single Disc by its barcode.
@@ -66,9 +62,8 @@ public interface PersistenceLayer {
     /**
      * Update information about a disc.
      *
-     * @param disc Disc to update.
-     * @throws IdentifierIsMissingException if disc has no barcode.
-     * @throws InvalidIdentifierException   if disc not exists yet.
+     * @param disc    Disc to update.
+     * @param barcode Barcode of disc.
      */
-    void updateDisc(Disc disc) throws IdentifierIsMissingException, InvalidIdentifierException;
+    void updateDisc(String barcode, Disc disc);
 }
