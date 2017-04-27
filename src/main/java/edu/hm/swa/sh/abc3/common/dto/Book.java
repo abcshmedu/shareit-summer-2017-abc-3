@@ -46,6 +46,7 @@ public class Book extends Medium {
         return "Book{" +
                 "author='" + author + '\'' +
                 ", isbn='" + isbn + '\'' +
+                ", title='" + getTitle() + '\'' +
                 '}';
     }
 }

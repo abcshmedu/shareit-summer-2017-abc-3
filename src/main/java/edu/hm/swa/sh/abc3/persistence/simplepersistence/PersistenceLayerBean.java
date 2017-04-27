@@ -2,15 +2,15 @@ package edu.hm.swa.sh.abc3.persistence.simplepersistence;
 
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
-import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExsistsException;
+import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExistsException;
+import edu.hm.swa.sh.abc3.common.exception.IdentifierIsImmutableException;
 import edu.hm.swa.sh.abc3.common.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.common.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
 
-import javax.inject.Singleton;
-import java.util.ArrayList;
+import javax.ejb.Local;
+import javax.ejb.Singleton;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,8 +20,9 @@ import java.util.Set;
  * Objects stored in HashMap instead in database.
  * I know, very simple but for the first step enough I think.
  */
-@Singleton
-public class PersistenceLayerImpl implements PersistenceLayer {
+@Local
+@Singleton(mappedName = "PersistenceLayer", name = "PersistenceLayer")
+public class PersistenceLayerBean implements PersistenceLayer {
     /**
      * HashMap for books, the key is the ISBN.
      */
@@ -31,47 +32,59 @@ public class PersistenceLayerImpl implements PersistenceLayer {
      */
     private Map<String, Disc> discs = new HashMap<>();
 
+    private static PersistenceLayerBean instance;
+
     @Override
-    public void storeBook(final Book book) throws IdentifierAlreadyExsistsException {
+    public void storeBook(final Book book) throws IdentifierAlreadyExistsException {
         if (books.get(book.getIsbn()) != null) {
-            throw new IdentifierAlreadyExsistsException("ISBN already exists.");
+            throw new IdentifierAlreadyExistsException("ISBN already exists.");
         }
-        books.put(book.getIsbn(), book);
+        this.books.put(book.getIsbn(), book);
+        System.out.println("Book stored: " + book);
     }
 
     @Override
     public Book getBook(final String isbn) {
-        return books.get(isbn);
+        System.out.println("Get book with ISBN: " + isbn);
+        final Book result = this.books.get(isbn);
+        System.out.println("Found book: " + result);
+        return result;
     }
 
     @Override
     public Book[] getBooks() {
         final Set<Map.Entry<String, Book>> booksEntrySet = books.entrySet();
-        final List<Book> result = new ArrayList<>();
+        final Book[] result = new Book[booksEntrySet.size()];
+        int index = 0;
 
         for (final Map.Entry entry : booksEntrySet) {
-            result.add((Book) entry.getValue());
+            result[index] = ((Book) entry.getValue());
+            index++;
         }
 
-        return (Book[]) result.toArray();
+        return result;
     }
 
     @Override
-    public void updateBook(final Book book) throws IdentifierIsMissingException, InvalidIdentifierException {
-        final String isbn = book.getIsbn();
+    public void updateBook(final String isbn, final Book book) throws IdentifierIsMissingException,
+            InvalidIdentifierException, IdentifierIsImmutableException {
         if (isbn == null || "".equals(isbn)) {
             throw new IdentifierIsMissingException("Parameter 'isbn' should not be null or empty.");
         }
-        if (getBook(isbn) == null) {
+        final Book oldData = getBook(isbn);
+        if (oldData == null) {
             throw new InvalidIdentifierException("Book does not exist");
+        }
+        if (!isbn.equals(book.getIsbn())) {
+            throw new IdentifierIsImmutableException("ISBN could not be change");
         }
         books.put(isbn, book);
     }
 
     @Override
-    public void storeDisc(final Disc disc) throws IdentifierAlreadyExsistsException {
+    public void storeDisc(final Disc disc) throws IdentifierAlreadyExistsException {
         if (discs.get(disc.getBarcode()) != null) {
-            throw new IdentifierAlreadyExsistsException("Barcode already exists.");
+            throw new IdentifierAlreadyExistsException("Barcode already exists.");
         }
         discs.put(disc.getBarcode(), disc);
     }
@@ -83,14 +96,16 @@ public class PersistenceLayerImpl implements PersistenceLayer {
 
     @Override
     public Disc[] getDiscs() {
-        final Set<Map.Entry<String, Disc>> booksEntrySet = discs.entrySet();
-        final List<Disc> result = new ArrayList<>();
+        final Set<Map.Entry<String, Disc>> discsEntrySet = discs.entrySet();
+        final Disc[] result = new Disc[discsEntrySet.size()];
+        int index = 0;
 
-        for (final Map.Entry entry : booksEntrySet) {
-            result.add((Disc) entry.getValue());
+        for (final Map.Entry entry : discsEntrySet) {
+            result[index] = ((Disc) entry.getValue());
+            index++;
         }
 
-        return (Disc[]) result.toArray();
+        return result;
     }
 
     @Override

@@ -1,7 +1,13 @@
 package edu.hm;
 
 import org.eclipse.jetty.server.*;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.*;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
+
+import javax.servlet.ServletContext;
 
 /**
  * Start the application without an AppServer like tomcat.

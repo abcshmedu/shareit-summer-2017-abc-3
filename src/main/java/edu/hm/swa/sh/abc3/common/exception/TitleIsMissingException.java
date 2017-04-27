@@ -3,7 +3,8 @@ package edu.hm.swa.sh.abc3.common.exception;
 /**
  * Exception if title of a book is missing.
  */
-public class TitleIsMissingException extends Exception {
+public class TitleIsMissingException extends BaseException {
+    private static final int ERROR_CODE = -150;
     private final String message;
 
     /**
@@ -12,7 +13,7 @@ public class TitleIsMissingException extends Exception {
      * @param message Exception message.
      */
     public TitleIsMissingException(final String message) {
-        super(message);
+        super(message, ERROR_CODE);
         this.message = message;
     }
 
