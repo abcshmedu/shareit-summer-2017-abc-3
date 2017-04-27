@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class DiscType extends BaseType {
+public class DiscType {
     private String title;
     private String director;
     private String barcode;

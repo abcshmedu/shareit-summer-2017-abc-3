@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ExceptionResponseType extends BaseType {
+public class ExceptionResponseType {
     private String message;
     private int code;
 

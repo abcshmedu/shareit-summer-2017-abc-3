@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class BookType extends BaseType {
+public class BookType {
     private String title;
     private String author;
     private String isbn;
