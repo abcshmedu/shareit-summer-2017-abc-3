@@ -3,7 +3,6 @@ package edu.hm.swa.sh.abc3.persistence.simplepersistence;
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
 import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExistsException;
-import edu.hm.swa.sh.abc3.common.exception.IdentifierIsImmutableException;
 import edu.hm.swa.sh.abc3.common.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.common.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
@@ -32,20 +31,14 @@ public class PersistenceLayerBean implements PersistenceLayer {
      */
     private Map<String, Disc> discs = new HashMap<>();
 
-    private static PersistenceLayerBean instance;
-
     @Override
-    public void storeBook(final Book book) throws IdentifierAlreadyExistsException {
-        if (books.get(book.getIsbn()) != null) {
-            throw new IdentifierAlreadyExistsException("ISBN already exists.");
-        }
+    public void storeBook(final Book book) {
         this.books.put(book.getIsbn(), book);
         System.out.println("Book stored: " + book);
     }
 
     @Override
     public Book getBook(final String isbn) {
-        System.out.println("Get book with ISBN: " + isbn);
         final Book result = this.books.get(isbn);
         System.out.println("Found book: " + result);
         return result;
@@ -61,24 +54,14 @@ public class PersistenceLayerBean implements PersistenceLayer {
             result[index] = ((Book) entry.getValue());
             index++;
         }
-
+        System.out.println("Found books: " + result);
         return result;
     }
 
     @Override
-    public void updateBook(final String isbn, final Book book) throws IdentifierIsMissingException,
-            InvalidIdentifierException, IdentifierIsImmutableException {
-        if (isbn == null || "".equals(isbn)) {
-            throw new IdentifierIsMissingException("Parameter 'isbn' should not be null or empty.");
-        }
-        final Book oldData = getBook(isbn);
-        if (oldData == null) {
-            throw new InvalidIdentifierException("Book does not exist");
-        }
-        if (!isbn.equals(book.getIsbn())) {
-            throw new IdentifierIsImmutableException("ISBN could not be change");
-        }
+    public void updateBook(final String isbn, final Book book) {
         books.put(isbn, book);
+        System.out.println("Updated book with ISBN '" + isbn + "' to " + book);
     }
 
     @Override

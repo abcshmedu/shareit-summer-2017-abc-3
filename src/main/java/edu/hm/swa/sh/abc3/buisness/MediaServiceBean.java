@@ -44,6 +44,9 @@ public class MediaServiceBean implements MediaService {
         if (title == null || title.length() < 1) {
             throw new TitleIsMissingException("Book title is missing.");
         }
+        if (persistenceLayer.getBook(book.getIsbn()) != null) {
+            throw new IdentifierAlreadyExistsException("ISBN already exists.");
+        }
         persistenceLayer.storeBook(book);
     }
 
@@ -85,6 +88,17 @@ public class MediaServiceBean implements MediaService {
     @Override
     public void updateBook(final String isbn, final Book book) throws IdentifierIsMissingException,
             InvalidIdentifierException, IdentifierIsImmutableException {
+        if (isbn == null || "".equals(isbn)) {
+            throw new IdentifierIsMissingException("Parameter 'ISBN' should not be null or empty.");
+        }
+        final Book oldData = getBook(isbn);
+        if (oldData == null) {
+            throw new InvalidIdentifierException("Book does not exist");
+        }
+        if (!isbn.equals(book.getIsbn())) {
+            throw new IdentifierIsImmutableException("ISBN could not be change");
+        }
+
         persistenceLayer.updateBook(isbn, book);
     }
 
