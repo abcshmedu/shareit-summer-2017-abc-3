@@ -2,6 +2,7 @@ package edu.hm.swa.sh.abc3.persistence.simplepersistence;
 
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
+import edu.hm.swa.sh.abc3.common.dto.Medium;
 import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
 
 import javax.ejb.Local;
@@ -51,7 +52,7 @@ public class PersistenceLayerBean implements PersistenceLayer {
             result[index] = ((Book) entry.getValue());
             index++;
         }
-        System.out.println("Found books: " + result);
+        System.out.println("Found books: " + arrayToString(result));
         return result;
     }
 
@@ -84,7 +85,7 @@ public class PersistenceLayerBean implements PersistenceLayer {
             result[index] = ((Disc) entry.getValue());
             index++;
         }
-        System.out.println("Found discs: " + result);
+        System.out.println("Found discs: " + arrayToString(result));
         return result;
     }
 
@@ -92,5 +93,17 @@ public class PersistenceLayerBean implements PersistenceLayer {
     public void updateDisc(final String barcode, final Disc disc) {
         discs.put(barcode, disc);
         System.out.println("Updated disc with barcode '" + barcode + "' to " + disc);
+    }
+
+    private String arrayToString(final Medium[] mediums) {
+        final StringBuilder builder = new StringBuilder();
+
+        builder.append('[');
+        for (final Medium medium : mediums) {
+            builder.append(medium);
+        }
+        builder.append(']');
+
+        return builder.toString();
     }
 }
