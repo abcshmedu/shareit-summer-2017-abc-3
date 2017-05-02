@@ -20,10 +20,8 @@ import javax.ws.rs.core.Response;
 @Path("media")
 @Produces(MediaType.APPLICATION_JSON)
 public class RestService {
-    @EJB
-    private BookService bookService;
-    @EJB
-    private DiscService discService;
+    private BookService bookService = new BookService();
+    private DiscService discService = new DiscService();
 
     /**
      * Create a new book.

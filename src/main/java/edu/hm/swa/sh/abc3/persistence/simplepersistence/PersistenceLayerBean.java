@@ -5,9 +5,6 @@ import edu.hm.swa.sh.abc3.common.dto.Disc;
 import edu.hm.swa.sh.abc3.common.dto.Medium;
 import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
 
-import javax.ejb.Local;
-import javax.ejb.Singleton;
-import javax.enterprise.context.ApplicationScoped;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -18,8 +15,19 @@ import java.util.Set;
  * Objects stored in HashMap instead in database.
  * I know, very simple but for the first step enough I think.
  */
-@ApplicationScoped
 public class PersistenceLayerBean implements PersistenceLayer {
+    private static PersistenceLayerBean instance;
+
+    public static PersistenceLayerBean getInstance() {
+        if (instance == null) {
+            instance = new PersistenceLayerBean();
+        }
+        return instance;
+    }
+
+    private PersistenceLayerBean() {
+    }
+
     /**
      * HashMap for books, the key is the ISBN.
      */

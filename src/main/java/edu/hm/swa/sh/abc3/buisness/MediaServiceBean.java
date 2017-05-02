@@ -11,22 +11,22 @@ import edu.hm.swa.sh.abc3.common.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.common.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.common.exception.TitleIsMissingException;
 import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
+import edu.hm.swa.sh.abc3.persistence.simplepersistence.PersistenceLayerBean;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 /**
  * Implementation of MediaService.
  */
-@Local
-@Stateless(mappedName = "MediaService", name = "MediaService")
 public class MediaServiceBean implements MediaService {
-    @Inject
-    private PersistenceLayer persistenceLayer;
-    @Inject
-    private IdentifierValidator identifierValidator;
+
+    private PersistenceLayer persistenceLayer = PersistenceLayerBean.getInstance();
+    private IdentifierValidator identifierValidator = new IdentifierValidator();
 
     @Override
     public void addBook(final Book book) throws IdentifierAlreadyExistsException, InvalidIdentifierException,

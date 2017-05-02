@@ -1,6 +1,7 @@
 package edu.hm.swa.sh.abc3.rest;
 
 import edu.hm.swa.sh.abc3.buisness.MediaService;
+import edu.hm.swa.sh.abc3.buisness.MediaServiceBean;
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.common.exception.AuthorIsMissingException;
 import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExistsException;
@@ -15,21 +16,18 @@ import edu.hm.swa.sh.abc3.rest.types.ExceptionResponseType;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 /**
  * Services for books.
  */
-@Stateless
 public class BookService {
     private static final int STATUS_OK = 200;
 
-    @EJB
-    private MediaService mediaService;
-    @EJB
-    private BookTransformer bookTransformer;
-    @EJB
-    private ExceptionTransformer exceptionTransformer;
+    private MediaService mediaService = new MediaServiceBean();
+    private BookTransformer bookTransformer = new BookTransformer();
+    private ExceptionTransformer exceptionTransformer = new ExceptionTransformer();
 
     /**
      * Add a new book to application.
@@ -42,10 +40,9 @@ public class BookService {
         final Response.ResponseBuilder response = Response.status(STATUS_OK);
         try {
             mediaService.addBook(book);
-        } catch (final IdentifierAlreadyExistsException | TitleIsMissingException | AuthorIsMissingException
-                | InvalidIdentifierException exception) {
-            final ExceptionResponseType result =
-                    exceptionTransformer.handleException(exception);
+        } catch (final IdentifierAlreadyExistsException | TitleIsMissingException | AuthorIsMissingException |
+                InvalidIdentifierException exception) {
+            final ExceptionResponseType result = exceptionTransformer.handleException(exception);
             response.entity(result);
         }
         return response.build();
@@ -72,10 +69,7 @@ public class BookService {
         final Book[] books = mediaService.getBooks();
         final BookType[] result = bookTransformer.toBookTypeArray(books);
 
-        return Response
-                .status(Response.Status.OK)
-                .entity(result)
-                .build();
+        return Response.status(Response.Status.OK).entity(result).build();
     }
 
     /**
@@ -90,8 +84,8 @@ public class BookService {
         try {
             final Book book = bookTransformer.toBook(bookType);
             mediaService.updateBook(isbn, book);
-        } catch (final IdentifierIsMissingException | InvalidIdentifierException
-                | IdentifierIsImmutableException exception) {
+        } catch (final IdentifierIsMissingException | InvalidIdentifierException | IdentifierIsImmutableException
+                exception) {
             response.entity(exceptionTransformer.handleException(exception));
         }
         return response.build();

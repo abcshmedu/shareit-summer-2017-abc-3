@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 /**
  * Transform Disc.
  */
-@Stateless
 public class DiscTransformer {
     /**
      * Transform a discType to a Disc dto.

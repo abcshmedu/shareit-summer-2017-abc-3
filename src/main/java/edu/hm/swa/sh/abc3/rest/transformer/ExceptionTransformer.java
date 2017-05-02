@@ -4,11 +4,11 @@ import edu.hm.swa.sh.abc3.common.exception.BaseException;
 import edu.hm.swa.sh.abc3.rest.types.ExceptionResponseType;
 
 import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 
 /**
  * Transform a Exception to Response.
  */
-@Stateless
 public class ExceptionTransformer {
     /**
      * Transform a exception to a JSONObject.

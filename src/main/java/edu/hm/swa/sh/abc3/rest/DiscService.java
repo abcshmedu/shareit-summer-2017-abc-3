@@ -1,6 +1,7 @@
 package edu.hm.swa.sh.abc3.rest;
 
 import edu.hm.swa.sh.abc3.buisness.MediaService;
+import edu.hm.swa.sh.abc3.buisness.MediaServiceBean;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
 import edu.hm.swa.sh.abc3.common.exception.DirectorIsMissingException;
 import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExistsException;
@@ -14,22 +15,19 @@ import edu.hm.swa.sh.abc3.rest.types.ExceptionResponseType;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 /**
  * Services for discs.
  */
-@Stateless
 public class DiscService {
     private static final int STATUS_OK = 200;
 
-    @EJB
-    private MediaService mediaService;
-    @EJB
-    private DiscTransformer discTransformer;
-    @EJB
-    private ExceptionTransformer exceptionTransformer;
-    private Response discs;
+    private MediaService mediaService = new MediaServiceBean();
+    private DiscTransformer discTransformer = new DiscTransformer();
+    private ExceptionTransformer exceptionTransformer = new ExceptionTransformer();
 
     /**
      * Returns a single disc.
