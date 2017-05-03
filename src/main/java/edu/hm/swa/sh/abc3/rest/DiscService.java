@@ -21,9 +21,18 @@ import javax.ws.rs.core.Response;
 public class DiscService {
     private static final int STATUS_OK = 200;
 
-    private MediaService mediaService = new MediaServiceBean();
-    private DiscTransformer discTransformer = new DiscTransformer();
-    private ExceptionTransformer exceptionTransformer = new ExceptionTransformer();
+    private MediaService mediaService;
+    private DiscTransformer discTransformer;
+    private ExceptionTransformer exceptionTransformer;
+
+    /**
+     * Cstr.
+     */
+    public DiscService() {
+        this.mediaService = new MediaServiceBean();
+        this.discTransformer = new DiscTransformer();
+        this.exceptionTransformer = new ExceptionTransformer();
+    }
 
     /**
      * Returns a single disc.

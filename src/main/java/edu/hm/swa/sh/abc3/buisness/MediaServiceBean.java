@@ -18,8 +18,16 @@ import edu.hm.swa.sh.abc3.persistence.simplepersistence.PersistenceLayerBean;
  */
 public class MediaServiceBean implements MediaService {
 
-    private PersistenceLayer persistenceLayer = PersistenceLayerBean.getInstance();
-    private IdentifierValidator identifierValidator = new IdentifierValidator();
+    private PersistenceLayer persistenceLayer;
+    private IdentifierValidator identifierValidator;
+
+    /**
+     * Cstr.
+     */
+    public MediaServiceBean() {
+        this.persistenceLayer = PersistenceLayerBean.getInstance();
+        this.identifierValidator = new IdentifierValidator();
+    }
 
     @Override
     public void addBook(final Book book) throws IdentifierAlreadyExistsException, InvalidIdentifierException,

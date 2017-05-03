@@ -15,7 +15,7 @@ import java.util.Set;
  * Objects stored in HashMap instead in database.
  * I know, very simple but for the first step enough I think.
  */
-public final class PersistenceLayerBean implements PersistenceLayer {
+public class PersistenceLayerBean implements PersistenceLayer {
     private static PersistenceLayerBean instance;
 
     /**

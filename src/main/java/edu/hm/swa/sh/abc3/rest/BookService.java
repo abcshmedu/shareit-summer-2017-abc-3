@@ -22,9 +22,18 @@ import javax.ws.rs.core.Response;
 public class BookService {
     private static final int STATUS_OK = 200;
 
-    private MediaService mediaService = new MediaServiceBean();
-    private BookTransformer bookTransformer = new BookTransformer();
-    private ExceptionTransformer exceptionTransformer = new ExceptionTransformer();
+    private MediaService mediaService;
+    private BookTransformer bookTransformer;
+    private ExceptionTransformer exceptionTransformer;
+
+    /**
+     * Cstr.
+     */
+    public BookService() {
+        this.mediaService = new MediaServiceBean();
+        this.bookTransformer = new BookTransformer();
+        this.exceptionTransformer = new ExceptionTransformer();
+    }
 
     /**
      * Add a new book to application.
