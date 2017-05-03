@@ -23,14 +23,11 @@ public class JettyStarter {
      * @throws Exception might throw for several reasons.
      */
     public static void main(String... args) throws Exception {
-//        int port = parseInt(System.getenv("PORT"));
-        int port = 8082;
+        int port = parseInt(System.getenv("PORT"));
         Server jetty = new Server(port);
         jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
         jetty.start();
         System.out.println("Jetty listening on port " + port);
         jetty.join();
-
     }
-
 }

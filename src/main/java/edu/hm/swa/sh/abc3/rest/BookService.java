@@ -14,9 +14,6 @@ import edu.hm.swa.sh.abc3.rest.transformer.ExceptionTransformer;
 import edu.hm.swa.sh.abc3.rest.types.BookType;
 import edu.hm.swa.sh.abc3.rest.types.ExceptionResponseType;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 /**
@@ -40,8 +37,8 @@ public class BookService {
         final Response.ResponseBuilder response = Response.status(STATUS_OK);
         try {
             mediaService.addBook(book);
-        } catch (final IdentifierAlreadyExistsException | TitleIsMissingException | AuthorIsMissingException |
-                InvalidIdentifierException exception) {
+        } catch (final IdentifierAlreadyExistsException | TitleIsMissingException | AuthorIsMissingException
+                | InvalidIdentifierException exception) {
             final ExceptionResponseType result = exceptionTransformer.handleException(exception);
             response.entity(result);
         }

@@ -3,7 +3,6 @@ package edu.hm.swa.sh.abc3.rest;
 import edu.hm.swa.sh.abc3.rest.types.BookType;
 import edu.hm.swa.sh.abc3.rest.types.DiscType;
 
-import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;

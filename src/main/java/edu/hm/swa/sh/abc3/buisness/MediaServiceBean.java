@@ -13,13 +13,6 @@ import edu.hm.swa.sh.abc3.common.exception.TitleIsMissingException;
 import edu.hm.swa.sh.abc3.persistence.PersistenceLayer;
 import edu.hm.swa.sh.abc3.persistence.simplepersistence.PersistenceLayerBean;
 
-import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-
 /**
  * Implementation of MediaService.
  */

@@ -3,8 +3,6 @@ package edu.hm.swa.sh.abc3.rest.transformer;
 import edu.hm.swa.sh.abc3.common.dto.Disc;
 import edu.hm.swa.sh.abc3.rest.types.DiscType;
 
-import javax.ejb.Stateless;
-
 /**
  * Transform Disc.
  */

@@ -4,9 +4,6 @@ package edu.hm.swa.sh.abc3.rest.transformer;
 import edu.hm.swa.sh.abc3.common.dto.Book;
 import edu.hm.swa.sh.abc3.rest.types.BookType;
 
-import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
-
 /**
  * Transform Book.
  */

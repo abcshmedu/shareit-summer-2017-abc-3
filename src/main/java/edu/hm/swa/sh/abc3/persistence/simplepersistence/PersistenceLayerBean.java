@@ -15,9 +15,13 @@ import java.util.Set;
  * Objects stored in HashMap instead in database.
  * I know, very simple but for the first step enough I think.
  */
-public class PersistenceLayerBean implements PersistenceLayer {
+public final class PersistenceLayerBean implements PersistenceLayer {
     private static PersistenceLayerBean instance;
 
+    /**
+     * To make persistence layer singleton.
+     * @return singleton instance of this class.
+     */
     public static PersistenceLayerBean getInstance() {
         if (instance == null) {
             instance = new PersistenceLayerBean();
@@ -25,6 +29,9 @@ public class PersistenceLayerBean implements PersistenceLayer {
         return instance;
     }
 
+    /**
+     * Private constructor.
+     */
     private PersistenceLayerBean() {
     }
 
@@ -103,6 +110,11 @@ public class PersistenceLayerBean implements PersistenceLayer {
         System.out.println("Updated disc with barcode '" + barcode + "' to " + disc);
     }
 
+    /**
+     * For logging.
+     * @param mediums Mediums to convert to string.
+     * @return string representation of mediums.
+     */
     private String arrayToString(final Medium[] mediums) {
         final StringBuilder builder = new StringBuilder();
 

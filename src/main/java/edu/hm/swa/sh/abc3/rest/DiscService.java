@@ -13,10 +13,6 @@ import edu.hm.swa.sh.abc3.rest.transformer.ExceptionTransformer;
 import edu.hm.swa.sh.abc3.rest.types.DiscType;
 import edu.hm.swa.sh.abc3.rest.types.ExceptionResponseType;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 /**
