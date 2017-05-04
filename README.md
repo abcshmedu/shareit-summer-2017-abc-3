@@ -22,7 +22,7 @@ Es wurden für die möglichen auftretenen Fehler selbstständige Exceptions erst
  Folgende Methoden können aufgerufen werden:
  
  | URL | HTTP Method | URL Paramter | JSON Parameter | Beschreibung | Mögliche Fehlercodes |
- --------------------------------------------------------
+  ----------- | -------- | --------------- | ---- | ---- | ---
  | /books | GET | KEINE | KEINE | Gibt alle gespeicherten Bücher als Array zurück | KEINE |
  | /books/{isbn} | GET | {isbn} = ISBN des Buches | KEINE | Gibt das Buch mit der dementsprechenden ISBN Nummer zurück | KEINE |
  | /books | POST | KEINE | Book | Speichert das mitgegebene Buch | TITLE_MISSING, IDENTIFIER_ALREADY_EXISTS, IDENTIFIER_MISSING, IDENTIFIER_INVALID, AUTHOR_MISSING |
