@@ -31,3 +31,28 @@ Es wurden für die möglichen auftretenen Fehler selbstständige Exceptions erst
   | /discs/{barcode} | GET | {barcode} = Barcode der Disc | KEINE | Gibt die Disc mit der dementsprechenden Barcode Nummer zurück | KEINE |
   | /discs | POST | KEINE | Disc | Speichert die mitgegebene Disc | TITLE_MISSING, IDENTIFIER_ALREADY_EXISTS, IDENTIFIER_MISSING, IDENTIFIER_INVALID, DIRECTOR_MISSING |
   | /discs/{barcode} | PUT | {barcode} = Barcode der Disc | Disc | Updated die Disc mit dem gegebenen Barcode | IDENTIFIER_MISSING, IDENTIFIER_INVALID, IDENTIFIER_IMMUTABLE |
+  
+  ## JSON Objekte
+  
+  Book:
+  
+  {
+    "title":"",
+    "author":"",
+    "isbn":""
+  }
+  
+  Disc:
+  
+  {
+    "title":"",
+    "director":"",
+    "barcode":"",
+    "fsk":18
+  }
+  
+  TITLE: String
+  AUTHOR: String
+  BARCODE: String
+  ISBN: String
+  FSK: Number
