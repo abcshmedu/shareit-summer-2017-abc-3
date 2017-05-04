@@ -33,9 +33,10 @@ public interface MediaService {
      * @throws InvalidIdentifierException       If disc barcode is missing.
      * @throws DirectorIsMissingException       If disc director is missing.
      * @throws IdentifierAlreadyExistsException If already a disc is persisted with same barcode.
+     * @throws TitleIsMissingException          If the title of the disc is missing.
      */
     void addDisc(Disc disc) throws InvalidIdentifierException, DirectorIsMissingException,
-            IdentifierAlreadyExistsException;
+            IdentifierAlreadyExistsException, TitleIsMissingException;
 
     /**
      * Get all books.

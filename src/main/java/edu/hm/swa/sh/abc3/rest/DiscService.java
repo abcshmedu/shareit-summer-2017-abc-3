@@ -8,6 +8,7 @@ import edu.hm.swa.sh.abc3.common.exception.IdentifierAlreadyExistsException;
 import edu.hm.swa.sh.abc3.common.exception.IdentifierIsImmutableException;
 import edu.hm.swa.sh.abc3.common.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.common.exception.InvalidIdentifierException;
+import edu.hm.swa.sh.abc3.common.exception.TitleIsMissingException;
 import edu.hm.swa.sh.abc3.rest.transformer.DiscTransformer;
 import edu.hm.swa.sh.abc3.rest.transformer.ExceptionTransformer;
 import edu.hm.swa.sh.abc3.rest.types.DiscType;
@@ -77,7 +78,7 @@ public class DiscService {
         try {
             mediaService.addDisc(disc);
         } catch (final InvalidIdentifierException | DirectorIsMissingException
-                | IdentifierAlreadyExistsException exception) {
+                | IdentifierAlreadyExistsException | TitleIsMissingException exception) {
             final ExceptionResponseType result =
                     exceptionTransformer.handleException(exception);
             response.entity(result);

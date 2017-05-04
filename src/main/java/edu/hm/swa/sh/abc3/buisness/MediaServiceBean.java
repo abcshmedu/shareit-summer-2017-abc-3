@@ -53,15 +53,19 @@ public class MediaServiceBean implements MediaService {
 
     @Override
     public void addDisc(final Disc disc) throws InvalidIdentifierException, DirectorIsMissingException,
-            IdentifierAlreadyExistsException {
+            IdentifierAlreadyExistsException, TitleIsMissingException {
         final String barcode = disc.getBarcode();
         final String director = disc.getDirector();
+        final String title = disc.getTitle();
 
-        if (barcode == null || barcode.length() < 1) {
-            throw new InvalidIdentifierException("Disc barcode is missing.");
+        if (barcode == null || !identifierValidator.checkIdentifier(barcode)) {
+            throw new InvalidIdentifierException("Disc barcode is not valid.");
         }
         if (director == null || director.length() < 1) {
             throw new DirectorIsMissingException("Disc director is missing.");
+        }
+        if (title == null || title.length() < 1) {
+            throw new TitleIsMissingException("Disc title is missing.");
         }
         if (persistenceLayer.getDisc(disc.getBarcode()) != null) {
             throw new IdentifierAlreadyExistsException("Barcode already exists.");
