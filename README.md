@@ -24,5 +24,10 @@ Es wurden für die möglichen auftretenen Fehler selbstständige Exceptions erst
  | URL | HTTP Method | URL Paramter | JSON Parameter | Beschreibung | Mögliche Fehlercodes |
   ----------- | -------- | --------------- | ---- | ---- | ---
  | /books | GET | KEINE | KEINE | Gibt alle gespeicherten Bücher als Array zurück | KEINE |
- | /books/{isbn} | GET | {isbn} = ISBN des Buches | KEINE | Gibt das Buch mit der dementsprechenden ISBN Nummer zurück | KEINE |
- | /books | POST | KEINE | Book | Speichert das mitgegebene Buch | TITLE_MISSING, IDENTIFIER_ALREADY_EXISTS, IDENTIFIER_MISSING, IDENTIFIER_INVALID, AUTHOR_MISSING |
+  | /books/{isbn} | GET | {isbn} = ISBN des Buches | KEINE | Gibt das Buch mit der dementsprechenden ISBN Nummer zurück | KEINE |
+  | /books | POST | KEINE | Book | Speichert das mitgegebene Buch | TITLE_MISSING, IDENTIFIER_ALREADY_EXISTS, IDENTIFIER_MISSING, IDENTIFIER_INVALID, AUTHOR_MISSING |
+  | /books/{isbn} | PUT | {isbn} = ISBN des Buches | Book | Updated das Buch mit der gegebenen ISBN | IDENTIFIER_MISSING, IDENTIFIER_INVALID, IDENTIFIER_IMMUTABLE |
+  | /discs | GET | KEINE | KEINE | Gibt alle gespeicherten Discs als Array zurück | KEINE |
+  | /discs/{barcode} | GET | {barcode} = Barcode der Disc | KEINE | Gibt die Disc mit der dementsprechenden Barcode Nummer zurück | KEINE |
+  | /discs | POST | KEINE | Disc | Speichert die mitgegebene Disc | TITLE_MISSING, IDENTIFIER_ALREADY_EXISTS, IDENTIFIER_MISSING, IDENTIFIER_INVALID, DIRECTOR_MISSING |
+  | /discs/{barcode} | PUT | {barcode} = Barcode der Disc | Disc | Updated die Disc mit dem gegebenen Barcode | IDENTIFIER_MISSING, IDENTIFIER_INVALID, IDENTIFIER_IMMUTABLE |
