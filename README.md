@@ -67,8 +67,6 @@ Es wurden für die möglichen auftretenen Fehler selbstständige Exceptions erst
   
   |  URL  |  HTTP Method  |  URL Parameter  |  JSON Parameter  |  Beschreibung  | Mögliche Fehlercodes  |
   | ----- | ------------- | --------------- | ---------------- | -------------- | --------------------- |
-  | /user | POST | KEINE | User | Erstellt einen neuen Benutzer. | KEINE |
-  | /user/{id} | PUT | {id}=userId | User | Updated die informationen über einen Benutzer | KEINE |
   | /login | POST | KEINE | Credential | Login für einen Benutzer | KEINE |
   | /logout | POST | KEINE | Token | Logout für einen Benutzer mit dem übergebenen JWT | KEINE |
   | /validate/{method} | POST | {method}=String, Restservice der für den Token authorisiert werden soll. | Token | Prüft ob der übergebene Token valide ist | KEINE |
