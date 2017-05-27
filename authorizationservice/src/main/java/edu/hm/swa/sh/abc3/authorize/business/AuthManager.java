@@ -14,10 +14,9 @@ public interface AuthManager {
      * Login the given user.
      * @param credentials Credentials of user.
      * @return Token.
-     * @throws IllegalArgumentException if need paramters not given.
      * @throws InvalidCredentialsException if credentials are invalid.
      */
-    TokenDTO loginUser(final CredentialsDTO credentials) throws IllegalArgumentException, InvalidCredentialsException;
+    TokenDTO loginUser(final CredentialsDTO credentials) throws InvalidCredentialsException;
 
     /**
      * Logout the user for given token.

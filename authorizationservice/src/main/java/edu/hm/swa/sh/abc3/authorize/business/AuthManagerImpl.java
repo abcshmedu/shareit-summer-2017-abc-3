@@ -17,12 +17,11 @@ import java.util.UUID;
  * Implementation of AuthManager.
  */
 public class AuthManagerImpl implements AuthManager {
-    private static final long TOKEN_TTL = 1_800_000;
+    protected static final long TOKEN_TTL = 1_800_000;
     private AuthPersistenceLayer persistenceLayer = SimpleAuthPersistenceLayerImpl.getInstance();
 
     @Override
-    public TokenDTO loginUser(final CredentialsDTO credentials) throws IllegalArgumentException,
-            InvalidCredentialsException {
+    public TokenDTO loginUser(final CredentialsDTO credentials) throws InvalidCredentialsException {
         if (StringUtils.isBlank(credentials.getUsername())) {
             throw new InvalidCredentialsException("No username given.");
         }
@@ -48,7 +47,6 @@ public class AuthManagerImpl implements AuthManager {
     public void validateToken(final CredentialsDTO token, final String method) throws InvalidCredentialsException,
             InvalidTokenException, UnauthorizedAccessException {
         if (StringUtils.isNotBlank(token.getToken())) {
-
             final TokenDTO tokenDTO = persistenceLayer.getToken(token.getToken());
             if (tokenDTO == null) {
                 throw new InvalidTokenException("Token is invalid.");

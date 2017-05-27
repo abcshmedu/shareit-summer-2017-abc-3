@@ -20,9 +20,16 @@ import edu.hm.swa.sh.abc3.generated.types.ValidateTokenResponse;
  * AuthenticationService.
  */
 public class AuthenticationService {
-    private AuthManager authenticationManager = new AuthManagerImpl();
+    private AuthManager authenticationManager;
     private static final int CODE_OK = 200;
     private static final String MESSAGE_OK = "OK";
+
+    /**
+     * Cstr.
+     */
+    public AuthenticationService() {
+        this.authenticationManager = new AuthManagerImpl();
+    }
 
     /**
      * Login user.
