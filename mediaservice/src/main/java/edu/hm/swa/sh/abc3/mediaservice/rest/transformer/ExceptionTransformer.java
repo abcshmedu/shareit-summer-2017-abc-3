@@ -1,7 +1,7 @@
 package edu.hm.swa.sh.abc3.mediaservice.rest.transformer;
 
 import edu.hm.swa.sh.abc3.exception.BaseException;
-import edu.hm.swa.sh.abc3.mediaservice.rest.types.MessageResponseType;
+import edu.hm.swa.sh.abc3.types.MessageResponseType;
 
 /**
  * Transform a Exception to Response.

@@ -1,7 +1,7 @@
 package edu.hm.swa.sh.abc3.mediaservice.rest.transformer;
 
 import edu.hm.swa.sh.abc3.dto.Disc;
-import edu.hm.swa.sh.abc3.mediaservice.rest.types.DiscType;
+import edu.hm.swa.sh.abc3.types.media.DiscType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

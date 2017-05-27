@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.cs.hm.edu/swa/abc3"
+           xmlns="http://www.cs.hm.edu/swa/abc3">
+
+    <!-- ________________________________________________________________________________________-->
+    <!--    Authservice                                                                          -->
+    <!-- ________________________________________________________________________________________-->
+    <xs:element name="LoginRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="username" type="xs:string"/>
+                <xs:element name="secret" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="LoginResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse">
+                    <xs:sequence>
+                        <xs:element name="token" type="xs:string"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="LogoutRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="token" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="LogoutResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="ValidateTokenRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="token" type="xs:string"/>
+                <xs:element name="method" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ValidateTokenResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ________________________________________________________________________________________-->
+    <!--    Mediaservice                                                                         -->
+    <!-- ________________________________________________________________________________________-->
+    <xs:element name="GetBooksRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AuthorizedRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetBooksResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse">
+                    <xs:sequence maxOccurs="unbounded">
+                        <xs:element name="books" type="BookType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetBookRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AuthorizedRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetBookResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse">
+                    <xs:sequence>
+                        <xs:element name="book" type="BookType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddBookRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AuthorizedRequest">
+                    <xs:sequence>
+                        <xs:element name="book" type="BookType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddBookResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateBookRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AuthorizedRequest">
+                    <xs:sequence>
+                        <xs:element name="book" type="BookType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateBookResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="GetDiscsRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AuthorizedRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetDiscsResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse">
+                    <xs:sequence maxOccurs="unbounded">
+                        <xs:element name="discs" type="DiscType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetDiscRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AuthorizedRequest"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetDiscResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse">
+                    <xs:sequence>
+                        <xs:element name="disc" type="DiscType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AddDiscRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AuthorizedRequest">
+                    <xs:sequence>
+                        <xs:element name="disc" type="DiscType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="AddDiscResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateDiscRequest">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="AuthorizedRequest">
+                    <xs:sequence>
+                        <xs:element name="disc" type="DiscType"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="UpdateDiscResponse">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="MessageResponse"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- ________________________________________________________________________________________-->
+    <!--    Abstract types                                                                       -->
+    <!-- ________________________________________________________________________________________-->
+    <xs:complexType name="MessageResponse" abstract="true">
+        <xs:sequence>
+            <xs:element name="code" type="xs:int" minOccurs="0"/>
+            <xs:element name="message" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AuthorizedRequest" abstract="true">
+        <xs:sequence>
+            <xs:element name="userAuthentication" type="UserIdentificationType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ________________________________________________________________________________________-->
+    <!--    Common types                                                                         -->
+    <!-- ________________________________________________________________________________________-->
+    <xs:complexType name="ErrorDescriptor">
+        <xs:sequence>
+
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="UserIdentificationType">
+        <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="BookType">
+        <xs:sequence>
+            <xs:element name="author" type="xs:string"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="isbn" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DiscType">
+        <xs:sequence>
+            <xs:element name="director" type="xs:string"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="fsk" type="xs:int"/>
+            <xs:element name="barcode" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

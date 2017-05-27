@@ -1,7 +1,7 @@
 package edu.hm.swa.sh.abc3.mediaservice.rest;
 
-import edu.hm.swa.sh.abc3.mediaservice.rest.types.BookType;
-import edu.hm.swa.sh.abc3.mediaservice.rest.types.DiscType;
+import edu.hm.swa.sh.abc3.types.media.BookType;
+import edu.hm.swa.sh.abc3.types.media.DiscType;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;

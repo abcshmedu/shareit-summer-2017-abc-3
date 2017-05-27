@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jaxb:bindings
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:annox="http://annox.dev.java.net"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_1.xsd"
+    jaxb:extensionBindingPrefixes="xjc annox"
+    version="2.1">
+
+    <jaxb:globalBindings>
+        <jaxb:javaType
+                    name="java.time.LocalDateTime"
+                    xmlType="xs:dateTime"
+                    parseMethod="common.jaxb.ServiceLocalDateTimeAdapter.unmarshal"
+                    printMethod="common.jaxb.ServiceLocalDateTimeAdapter.marshal" />
+        <jaxb:javaType
+                    name="java.time.LocalDate"
+                    xmlType="xs:date"
+                    parseMethod="common.jaxb.ServiceLocalDateAdapter.unmarshal"
+                    printMethod="common.jaxb.ServiceLocalDateAdapter.marshal" />
+    </jaxb:globalBindings>
+
+ </jaxb:bindings>

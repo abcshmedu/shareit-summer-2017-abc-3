@@ -69,7 +69,7 @@
         <dependency>
             <groupId>edu.hm.webapp</groupId>
             <artifactId>common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${parent.version}</version>
         </dependency>
     </dependencies>
 

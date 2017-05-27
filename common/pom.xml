@@ -11,5 +11,32 @@
 
     <artifactId>common</artifactId>
 
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.7.3</version>
+                <executions>
+                    <execution>
+                        <id>app1-stub-generation</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+                            <schemaIncludes>
+                                <include>*.xsd</include>
+                            </schemaIncludes>
+                            <generatePackage>edu.hm.swa.sh.abc3.generated.types</generatePackage>
+                            <generateDirectory>${project.build.directory}/generated-sources/</generateDirectory>
+                            <bindingDirectory>src/main/xjb</bindingDirectory>
+                            <bindingIncludes>*.xjc</bindingIncludes>
+                            <strict>true</strict>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

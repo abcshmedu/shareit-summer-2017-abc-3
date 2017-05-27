@@ -11,8 +11,8 @@ import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaServiceBean;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.BookTransformer;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.ExceptionTransformer;
-import edu.hm.swa.sh.abc3.mediaservice.rest.types.BookType;
-import edu.hm.swa.sh.abc3.mediaservice.rest.types.MessageResponseType;
+import edu.hm.swa.sh.abc3.types.media.BookType;
+import edu.hm.swa.sh.abc3.types.MessageResponseType;
 
 import javax.ws.rs.core.Response;
 

@@ -16,7 +16,8 @@ public enum ErrorCodes {
     // Authorize
     INVALID_CREDENTIALS(-200),
     INVALID_TOKEN(-210),
-    UNAUTHORIZED_METHOD(-220);
+    UNAUTHORIZED_METHOD(-220),
+    ;
 
     private final int errorCode;
 

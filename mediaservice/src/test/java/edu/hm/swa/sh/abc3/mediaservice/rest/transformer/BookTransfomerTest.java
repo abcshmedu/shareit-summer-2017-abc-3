@@ -1,7 +1,7 @@
 package edu.hm.swa.sh.abc3.mediaservice.rest.transformer;
 
 import edu.hm.swa.sh.abc3.dto.Book;
-import edu.hm.swa.sh.abc3.mediaservice.rest.types.BookType;
+import edu.hm.swa.sh.abc3.types.media.BookType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

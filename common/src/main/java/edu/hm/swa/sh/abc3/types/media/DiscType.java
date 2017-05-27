@@ -1,4 +1,4 @@
-package edu.hm.swa.sh.abc3.mediaservice.rest.types;
+package edu.hm.swa.sh.abc3.types.media;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

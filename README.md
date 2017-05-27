@@ -1,5 +1,18 @@
 # Starter Code für 2. Pratkikumsaufgabe Software-Architektur Sommer 2017 
 
+## Maven Befehle
+Befehle sind im Root Verzeichnis des Projekts auszuführen:
+
+- Authservice: mvn clean install -pl authorizationservice -am
+- Mediaservice: mvn clean install -pl mediaservice -am
+
+Für das deployment auf Heroku:
+
+- Authservice: mvn -pl authorizationservice heroku:deploy
+- Mediaservice: mvn -pl mediaservice heroku:deploy
+
+
+
 ## Exceptions
 Es wurden für die möglichen auftretenen Fehler selbstständige Exceptions erstellt, wo jede einen uniquen Errorcode besitzt.
  Folgende Exceptions existieren:

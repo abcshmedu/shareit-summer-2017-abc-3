@@ -11,8 +11,8 @@ import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaServiceBean;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.DiscTransformer;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.ExceptionTransformer;
-import edu.hm.swa.sh.abc3.mediaservice.rest.types.DiscType;
-import edu.hm.swa.sh.abc3.mediaservice.rest.types.MessageResponseType;
+import edu.hm.swa.sh.abc3.types.media.DiscType;
+import edu.hm.swa.sh.abc3.types.MessageResponseType;
 
 import javax.ws.rs.core.Response;
 

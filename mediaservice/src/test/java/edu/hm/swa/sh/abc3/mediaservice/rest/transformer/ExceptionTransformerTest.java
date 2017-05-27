@@ -5,7 +5,7 @@ import edu.hm.swa.sh.abc3.exception.BaseException;
 import edu.hm.swa.sh.abc3.exception.DirectorIsMissingException;
 import edu.hm.swa.sh.abc3.exception.IdentifierIsImmutableException;
 import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
-import edu.hm.swa.sh.abc3.mediaservice.rest.types.MessageResponseType;
+import edu.hm.swa.sh.abc3.types.MessageResponseType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
