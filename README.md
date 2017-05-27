@@ -75,12 +75,8 @@ Es wurden für die möglichen auftretenen Fehler selbstständige Exceptions erst
   
   ## Authenticate service
   
-  https://fast-basin-46958.herokuapp.com/ 
-  BaseUrl: /auth
-  
-  |  URL  |  HTTP Method  |  URL Parameter  |  JSON Parameter  |  Beschreibung  | Mögliche Fehlercodes  |
-  | ----- | ------------- | --------------- | ---------------- | -------------- | --------------------- |
-  | /login | POST | KEINE | Credential | Login für einen Benutzer | KEINE |
-  | /logout | POST | KEINE | Token | Logout für einen Benutzer mit dem übergebenen JWT | KEINE |
-  | /validate/{method} | POST | {method}=String, Restservice der für den Token authorisiert werden soll. | Token | Prüft ob der übergebene Token valide ist | KEINE |
-  
+  https://fast-basin-46958.herokuapp.com/auth
+ 
+ /login
+ /logout
+ /validate
