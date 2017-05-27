@@ -1,18 +1,17 @@
 package edu.hm.swa.sh.abc3.mediaservice.rest;
 
 import edu.hm.swa.sh.abc3.dto.Book;
-import edu.hm.swa.sh.abc3.exception.AuthorIsMissingException;
-import edu.hm.swa.sh.abc3.exception.IdentifierAlreadyExistsException;
+import edu.hm.swa.sh.abc3.exception.BaseException;
 import edu.hm.swa.sh.abc3.exception.IdentifierIsImmutableException;
 import edu.hm.swa.sh.abc3.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
-import edu.hm.swa.sh.abc3.exception.TitleIsMissingException;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaServiceBean;
+import edu.hm.swa.sh.abc3.mediaservice.rest.auth.AuthserviceOutbound;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.BookTransformer;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.ExceptionTransformer;
-import edu.hm.swa.sh.abc3.types.media.BookType;
 import edu.hm.swa.sh.abc3.types.MessageResponseType;
+import edu.hm.swa.sh.abc3.types.media.BookType;
 
 import javax.ws.rs.core.Response;
 
@@ -26,6 +25,8 @@ public class BookService {
     private BookTransformer bookTransformer;
     private ExceptionTransformer exceptionTransformer;
 
+    private AuthserviceOutbound authserviceOutbound;
+
     /**
      * Cstr.
      */
@@ -33,23 +34,25 @@ public class BookService {
         this.mediaService = new MediaServiceBean();
         this.bookTransformer = new BookTransformer();
         this.exceptionTransformer = new ExceptionTransformer();
+        this.authserviceOutbound = new AuthserviceOutbound();
     }
 
     /**
      * Add a new book to application.
      *
+     * @param token    user token.
      * @param bookType Book to add.
      * @return Response.
      */
-    public Response addBook(final BookType bookType) {
+    public Response addBook(String token, final BookType bookType) {
         final Book book = bookTransformer.toBook(bookType);
         final Response.ResponseBuilder response = Response.status(STATUS_OK);
         MessageResponseType result;
         try {
+            this.authserviceOutbound.validateToken(token, "addbook");
             mediaService.addBook(book);
             result = createOkMessageResponse();
-        } catch (final IdentifierAlreadyExistsException | TitleIsMissingException | AuthorIsMissingException
-                | InvalidIdentifierException exception) {
+        } catch (final BaseException exception) {
             result = exceptionTransformer.handleException(exception);
         }
         response.entity(result);
@@ -59,10 +62,16 @@ public class BookService {
     /**
      * Returns a single book.
      *
-     * @param isbn ISBN of book.
+     * @param token user token.
+     * @param isbn  ISBN of book.
      * @return Response.
      */
-    public Response getBook(final String isbn) {
+    public Response getBook(String token, final String isbn) {
+        try {
+            this.authserviceOutbound.validateToken(token, "addbook");
+        } catch (BaseException e) {
+            e.printStackTrace();
+        }
         final Book book = mediaService.getBook(isbn);
         final BookType bookType = bookTransformer.toBookType(book);
         return Response.status(STATUS_OK).entity(bookType).build();
@@ -71,9 +80,10 @@ public class BookService {
     /**
      * Returns all stored books.
      *
+     * @param token user token.
      * @return Response.
      */
-    public Response getBooks() {
+    public Response getBooks(String token) {
         final Book[] books = mediaService.getBooks();
         final BookType[] result = bookTransformer.toBookTypeArray(books);
 
@@ -83,11 +93,12 @@ public class BookService {
     /**
      * Update a book.
      *
+     * @param token    user token.
      * @param isbn     ISBN of book to update.
      * @param bookType new book data.
      * @return Response.
      */
-    public Response updateBooks(final String isbn, final BookType bookType) {
+    public Response updateBooks(String token, final String isbn, final BookType bookType) {
         final Response.ResponseBuilder response = Response.status(STATUS_OK);
         MessageResponseType result;
         try {
@@ -104,6 +115,7 @@ public class BookService {
 
     /**
      * Create a new MessageRespnoseType.
+     *
      * @return new messageResponse object.
      */
     private MessageResponseType createOkMessageResponse() {

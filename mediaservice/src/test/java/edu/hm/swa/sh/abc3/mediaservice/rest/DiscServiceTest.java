@@ -1,6 +1,5 @@
 package edu.hm.swa.sh.abc3.mediaservice.rest;
 
-import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
 import edu.hm.swa.sh.abc3.dto.Disc;
 import edu.hm.swa.sh.abc3.exception.DirectorIsMissingException;
 import edu.hm.swa.sh.abc3.exception.IdentifierAlreadyExistsException;
@@ -8,10 +7,11 @@ import edu.hm.swa.sh.abc3.exception.IdentifierIsImmutableException;
 import edu.hm.swa.sh.abc3.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.exception.TitleIsMissingException;
+import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.DiscTransformer;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.ExceptionTransformer;
-import edu.hm.swa.sh.abc3.types.media.DiscType;
 import edu.hm.swa.sh.abc3.types.MessageResponseType;
+import edu.hm.swa.sh.abc3.types.media.DiscType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +67,7 @@ public class DiscServiceTest {
         final Disc disc = new Disc(TITLE, BARCODE, DIRECTOR, FSK);
 
         when(discTransformer.toDisc(discType)).thenReturn(disc);
-        final Response result = underTest.addDisc(discType);
+        final Response result = underTest.addDisc("", discType);
         verify(mediaService).addDisc(disc);
 
         final Response expected = createOkResponse().build();
@@ -95,7 +95,7 @@ public class DiscServiceTest {
         when(discTransformer.toDisc(discType)).thenReturn(disc);
         when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
         doThrow(exception).when(mediaService).addDisc(disc);
-        final Response result = underTest.addDisc(discType);
+        final Response result = underTest.addDisc("", discType);
         verify(mediaService).addDisc(disc);
 
         final Response expected = createBaseResponse().entity(exceptionResponseType).build();
@@ -115,7 +115,7 @@ public class DiscServiceTest {
 
         when(discTransformer.toDiscType(disc)).thenReturn(discType);
         when(mediaService.getDisc(BARCODE)).thenReturn(disc);
-        final Response result = underTest.getDisc(BARCODE);
+        final Response result = underTest.getDisc("", BARCODE);
 
         final Response expected = createBaseResponse().entity(discType).build();
 
@@ -129,7 +129,7 @@ public class DiscServiceTest {
         when(mediaService.getDisc(BARCODE)).thenReturn(null);
         when(discTransformer.toDiscType(null)).thenReturn(discType);
 
-        final Response result = underTest.getDisc(BARCODE);
+        final Response result = underTest.getDisc("", BARCODE);
 
         final Response expected = createBaseResponse().entity(discType).build();
 
@@ -164,7 +164,7 @@ public class DiscServiceTest {
         when(mediaService.getDiscs()).thenReturn(discArray);
         when(discTransformer.toDiscTypeArray(discArray)).thenReturn(discArrayType);
 
-        final Response result = underTest.getDiscs();
+        final Response result = underTest.getDiscs("");
 
         final Response expected = createBaseResponse().entity(discArrayType).build();
 
@@ -179,7 +179,7 @@ public class DiscServiceTest {
         when(mediaService.getDiscs()).thenReturn(discArray);
         when(discTransformer.toDiscTypeArray(discArray)).thenReturn(discTypeArray);
 
-        final Response result = underTest.getDiscs();
+        final Response result = underTest.getDiscs("");
 
         final Response expected = createBaseResponse().entity(discTypeArray).build();
 
@@ -198,7 +198,7 @@ public class DiscServiceTest {
         final Disc disc = new Disc(TITLE, BARCODE, DIRECTOR, FSK);
 
         when(discTransformer.toDisc(discType)).thenReturn(disc);
-        final Response result = underTest.updateDisc(BARCODE, discType);
+        final Response result = underTest.updateDisc("", BARCODE, discType);
         verify(mediaService).updateDisc(BARCODE, disc);
 
         final Response expected = createOkResponse().build();
@@ -227,7 +227,7 @@ public class DiscServiceTest {
         when(discTransformer.toDisc(discType)).thenReturn(disc);
         when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
         doThrow(exception).when(mediaService).updateDisc(BARCODE, disc);
-        final Response result = underTest.updateDisc(BARCODE, discType);
+        final Response result = underTest.updateDisc("", BARCODE, discType);
         verify(mediaService).updateDisc(BARCODE, disc);
         final Response expected = createBaseResponse().entity(exceptionResponseType).build();
 

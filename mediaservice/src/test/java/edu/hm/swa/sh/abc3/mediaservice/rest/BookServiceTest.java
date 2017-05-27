@@ -1,6 +1,5 @@
 package edu.hm.swa.sh.abc3.mediaservice.rest;
 
-import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
 import edu.hm.swa.sh.abc3.dto.Book;
 import edu.hm.swa.sh.abc3.exception.AuthorIsMissingException;
 import edu.hm.swa.sh.abc3.exception.IdentifierAlreadyExistsException;
@@ -8,10 +7,11 @@ import edu.hm.swa.sh.abc3.exception.IdentifierIsImmutableException;
 import edu.hm.swa.sh.abc3.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.exception.TitleIsMissingException;
+import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.BookTransformer;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.ExceptionTransformer;
-import edu.hm.swa.sh.abc3.types.media.BookType;
 import edu.hm.swa.sh.abc3.types.MessageResponseType;
+import edu.hm.swa.sh.abc3.types.media.BookType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,7 +64,7 @@ public class BookServiceTest {
         final Book book = new Book(TITLE, AUTHOR, ISBN);
 
         when(bookTransformer.toBook(bookType)).thenReturn(book);
-        final Response result = underTest.addBook(bookType);
+        final Response result = underTest.addBook("", bookType);
         verify(mediaService).addBook(book);
 
         final Response expected = createOkResponse().build();
@@ -92,7 +92,7 @@ public class BookServiceTest {
         doThrow(exception).when(mediaService).addBook(book);
         when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
 
-        final Response result = underTest.addBook(bookType);
+        final Response result = underTest.addBook("", bookType);
 
         final Response expected = createBaseResponse().entity(exceptionResponseType).build();
 
@@ -111,7 +111,7 @@ public class BookServiceTest {
         when(mediaService.getBook(ISBN)).thenReturn(book);
         when(bookTransformer.toBookType(book)).thenReturn(bookType);
 
-        final Response result = underTest.getBook(ISBN);
+        final Response result = underTest.getBook("", ISBN);
 
         final Response expected = createBaseResponse().entity(bookType).build();
 
@@ -125,7 +125,7 @@ public class BookServiceTest {
         when(mediaService.getBook(ISBN)).thenReturn(null);
         when(bookTransformer.toBookType(null)).thenReturn(bookType);
 
-        final Response result = underTest.getBook(ISBN);
+        final Response result = underTest.getBook("", ISBN);
 
         final Response expected = createBaseResponse().entity(bookType).build();
 
@@ -158,7 +158,7 @@ public class BookServiceTest {
         when(mediaService.getBooks()).thenReturn(bookArray);
         when(bookTransformer.toBookTypeArray(bookArray)).thenReturn(bookTypeArray);
 
-        final Response result = underTest.getBooks();
+        final Response result = underTest.getBooks("");
 
         final Response expected = createBaseResponse().entity(bookTypeArray).build();
 
@@ -173,7 +173,7 @@ public class BookServiceTest {
         when(mediaService.getBooks()).thenReturn(bookArray);
         when(bookTransformer.toBookTypeArray(bookArray)).thenReturn(bookTypeArray);
 
-        final Response result = underTest.getBooks();
+        final Response result = underTest.getBooks("");
 
         final Response expected = createBaseResponse().entity(bookTypeArray).build();
 
@@ -191,7 +191,7 @@ public class BookServiceTest {
         final Book book = new Book(TITLE, AUTHOR, ISBN);
 
         when(bookTransformer.toBook(bookType)).thenReturn(book);
-        final Response result = underTest.updateBooks(ISBN, bookType);
+        final Response result = underTest.updateBooks("", ISBN, bookType);
         verify(mediaService).updateBook(ISBN, book);
 
         final Response expected = createOkResponse().build();
@@ -219,7 +219,7 @@ public class BookServiceTest {
         when(bookTransformer.toBook(bookType)).thenReturn(book);
         when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
         doThrow(exception).when(mediaService).updateBook(ISBN, book);
-        final Response result = underTest.updateBooks(ISBN, bookType);
+        final Response result = underTest.updateBooks("", ISBN, bookType);
         verify(mediaService).updateBook(ISBN, book);
         final Response expected = createBaseResponse().entity(exceptionResponseType).build();
 
