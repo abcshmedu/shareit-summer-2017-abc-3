@@ -62,7 +62,7 @@ Es wurden für die möglichen auftretenen Fehler selbstständige Exceptions erst
   
   ## Authenticate service
   
-  https://vast-shelf-77148.herokuapp.com
+  https://fast-basin-46958.herokuapp.com/ 
   BaseUrl: /auth
   
   |  URL  |  HTTP Method  |  URL Parameter  |  JSON Parameter  |  Beschreibung  | Mögliche Fehlercodes  |
