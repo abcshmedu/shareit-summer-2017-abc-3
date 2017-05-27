@@ -14,7 +14,7 @@ import static java.lang.Integer.parseInt;
 public class JettyStarter {
 
     private static final String APP_URL = "/";
-    private static final String WEBAPP_DIR = "./src/main/webapp/";
+    private static final String WEBAPP_DIR = "./mediaservice/src/main/webapp/";
 
     /**
      * Deploy local directories using Jetty without needing a container-based deployment.
@@ -24,7 +24,9 @@ public class JettyStarter {
      */
     public static void main(String... args) throws Exception {
         int port = 8082;
-//        int port = parseInt(System.getenv("PORT"));
+        if (System.getenv("PORT") != null) {
+            port = parseInt(System.getenv("PORT"));
+        }
         Server jetty = new Server(port);
         jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
         jetty.start();
