@@ -1,6 +1,7 @@
 package edu.hm.swa.sh.abc3.mediaservice.rest;
 
 import edu.hm.swa.sh.abc3.dto.Disc;
+import edu.hm.swa.sh.abc3.exception.AuthorIsMissingException;
 import edu.hm.swa.sh.abc3.exception.DirectorIsMissingException;
 import edu.hm.swa.sh.abc3.exception.IdentifierAlreadyExistsException;
 import edu.hm.swa.sh.abc3.exception.IdentifierIsImmutableException;
@@ -25,8 +26,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -61,7 +64,8 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testAddDiscGoodCase() throws DirectorIsMissingException, IdentifierAlreadyExistsException, TitleIsMissingException, InvalidIdentifierException, AuthException {
+    public void testAddDiscGoodCase() throws DirectorIsMissingException, IdentifierAlreadyExistsException,
+            TitleIsMissingException, InvalidIdentifierException, AuthException {
         final DiscType discType = new DiscType();
         discType.setBarcode(BARCODE);
         discType.setDirector(DIRECTOR);
@@ -81,7 +85,8 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testAddDiscExceptionMapping() throws DirectorIsMissingException, IdentifierAlreadyExistsException, TitleIsMissingException, InvalidIdentifierException, AuthException {
+    public void testAddDiscExceptionMapping() throws DirectorIsMissingException, IdentifierAlreadyExistsException,
+            TitleIsMissingException, InvalidIdentifierException, AuthException {
         final DiscType discType = new DiscType();
         discType.setBarcode("123");
         discType.setDirector(DIRECTOR);
@@ -196,7 +201,8 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testUpdateDiscsGoodCase() throws IdentifierIsImmutableException, InvalidIdentifierException, IdentifierIsMissingException, AuthException {
+    public void testUpdateDiscsGoodCase() throws IdentifierIsImmutableException, InvalidIdentifierException,
+            IdentifierIsMissingException, AuthException {
         final DiscType discType = new DiscType();
         discType.setBarcode(BARCODE);
         discType.setDirector(DIRECTOR);
@@ -216,7 +222,8 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testUpdateBooksChangeBarcode() throws IdentifierIsImmutableException, InvalidIdentifierException, IdentifierIsMissingException, AuthException {
+    public void testUpdateBooksChangeBarcode() throws IdentifierIsImmutableException, InvalidIdentifierException,
+            IdentifierIsMissingException, AuthException {
         final DiscType discType = new DiscType();
         discType.setBarcode(BARCODE);
         discType.setDirector(DIRECTOR);
@@ -225,8 +232,8 @@ public class DiscServiceTest {
 
         final Disc disc = new Disc(TITLE, BARCODE, DIRECTOR, FSK);
 
-        final IdentifierIsImmutableException exception =
-                new IdentifierIsImmutableException(EXCEPTION_MESSAGE_IMMUTABLE);
+        final IdentifierIsImmutableException exception = new IdentifierIsImmutableException
+                (EXCEPTION_MESSAGE_IMMUTABLE);
 
         final MessageResponseType exceptionResponseType = new MessageResponseType();
         exceptionResponseType.setCode(exception.getErrorCode());
@@ -238,6 +245,100 @@ public class DiscServiceTest {
         final Response result = underTest.updateDisc("", BARCODE, discType);
         verify(authserviceOutbound).validateToken(anyString(), anyString());
         verify(mediaService).updateDisc(BARCODE, disc);
+        final Response expected = createBaseResponse().entity(exceptionResponseType).build();
+
+        equalsResponses(expected, result);
+    }
+
+
+    @Test
+    public void testAddDiscUnauthorized() throws AuthException, TitleIsMissingException,
+            IdentifierAlreadyExistsException, AuthorIsMissingException, InvalidIdentifierException,
+            DirectorIsMissingException {
+        final DiscType discType = new DiscType();
+        discType.setBarcode(BARCODE);
+        discType.setDirector(DIRECTOR);
+        discType.setTitle(TITLE);
+        discType.setFsk(FSK);
+
+        final Disc disc = new Disc(TITLE, BARCODE, DIRECTOR, FSK);
+
+        final AuthException exception = new AuthException(EXCEPTION_MESSAGE, -999);
+
+        final MessageResponseType exceptionResponseType = new MessageResponseType();
+        exceptionResponseType.setCode(exception.getErrorCode());
+        exceptionResponseType.setMessage(EXCEPTION_MESSAGE);
+
+        when(discTransformer.toDisc(discType)).thenReturn(disc);
+        doThrow(exception).when(authserviceOutbound).validateToken(anyString(), anyString());
+        when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
+
+        final Response result = underTest.addDisc("token", discType);
+        verify(mediaService, never()).addDisc(any());
+        final Response expected = createBaseResponse().entity(exceptionResponseType).build();
+
+        equalsResponses(expected, result);
+    }
+
+    @Test
+    public void testGetDiscUnauthorized() throws AuthException {
+        final AuthException exception = new AuthException(EXCEPTION_MESSAGE, -999);
+
+        final MessageResponseType exceptionResponseType = new MessageResponseType();
+        exceptionResponseType.setCode(exception.getErrorCode());
+        exceptionResponseType.setMessage(EXCEPTION_MESSAGE);
+
+        doThrow(exception).when(authserviceOutbound).validateToken(anyString(), anyString());
+        when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
+
+        final Response result = underTest.getDisc("token", BARCODE);
+        verify(mediaService, never()).getDisc(any());
+        final Response expected = createBaseResponse().entity(exceptionResponseType).build();
+
+        equalsResponses(expected, result);
+    }
+
+    @Test
+    public void testGetDiscsUnauthorized() throws AuthException {
+        final AuthException exception = new AuthException(EXCEPTION_MESSAGE, -999);
+
+        final MessageResponseType exceptionResponseType = new MessageResponseType();
+        exceptionResponseType.setCode(exception.getErrorCode());
+        exceptionResponseType.setMessage(EXCEPTION_MESSAGE);
+
+        doThrow(exception).when(authserviceOutbound).validateToken(anyString(), anyString());
+        when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
+
+        final Response result = underTest.getDiscs("token");
+        verify(mediaService, never()).getDiscs();
+        final Response expected = createBaseResponse().entity(exceptionResponseType).build();
+
+        equalsResponses(expected, result);
+    }
+
+    @Test
+    public void testUpdateBookUnauthorized() throws IdentifierIsImmutableException, InvalidIdentifierException,
+            IdentifierIsMissingException, AuthException {
+        final DiscType discType = new DiscType();
+        discType.setBarcode(BARCODE);
+        discType.setDirector(DIRECTOR);
+        discType.setTitle(TITLE);
+        discType.setFsk(FSK);
+
+        final Disc disc = new Disc(TITLE, BARCODE, DIRECTOR, FSK);
+
+        final AuthException exception = new AuthException(EXCEPTION_MESSAGE, -999);
+
+        final MessageResponseType exceptionResponseType = new MessageResponseType();
+        exceptionResponseType.setCode(exception.getErrorCode());
+        exceptionResponseType.setMessage(EXCEPTION_MESSAGE);
+
+        when(discTransformer.toDisc(discType)).thenReturn(disc);
+        doThrow(exception).when(authserviceOutbound).validateToken(anyString(), anyString());
+        when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
+
+        final Response result = underTest.updateDisc("token", BARCODE, discType);
+        verify(mediaService, never()).updateDisc(any(), any());
         final Response expected = createBaseResponse().entity(exceptionResponseType).build();
 
         equalsResponses(expected, result);
