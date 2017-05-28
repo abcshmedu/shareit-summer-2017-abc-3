@@ -4,6 +4,7 @@ import edu.hm.swa.sh.abc3.dto.Disc;
 import edu.hm.swa.sh.abc3.exception.BaseException;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaServiceBean;
+import edu.hm.swa.sh.abc3.mediaservice.rest.auth.AuthserviceOutbound;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.DiscTransformer;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.ExceptionTransformer;
 import edu.hm.swa.sh.abc3.types.MessageResponseType;
@@ -20,6 +21,7 @@ public class DiscService {
     private MediaService mediaService;
     private DiscTransformer discTransformer;
     private ExceptionTransformer exceptionTransformer;
+    private AuthserviceOutbound authserviceOutbound;
 
     /**
      * Cstr.
@@ -28,6 +30,7 @@ public class DiscService {
         this.mediaService = new MediaServiceBean();
         this.discTransformer = new DiscTransformer();
         this.exceptionTransformer = new ExceptionTransformer();
+        this.authserviceOutbound = new AuthserviceOutbound();
     }
 
     /**
@@ -37,11 +40,20 @@ public class DiscService {
      * @param barcode Barcode of disc.
      * @return Response.
      */
-    public Response getDisc(String token, final String barcode) {
-        final Disc disc = mediaService.getDisc(barcode);
-        final DiscType result = discTransformer.toDiscType(disc);
+    public Response getDisc(final String token, final String barcode) {
+        final Response.ResponseBuilder response = Response.status(STATUS_OK);
+        Object result;
 
-        return Response.status(Response.Status.OK).entity(result).build();
+        try {
+            this.authserviceOutbound.validateToken(token, "getDisc");
+            final Disc disc = mediaService.getDisc(barcode);
+            result = discTransformer.toDiscType(disc);
+        } catch (final BaseException exception) {
+            result = exceptionTransformer.handleException(exception);
+        }
+
+        response.entity(result);
+        return response.build();
     }
 
     /**
@@ -50,11 +62,20 @@ public class DiscService {
      * @param token user token.
      * @return Response.
      */
-    public Response getDiscs(String token) {
-        final Disc[] discs = mediaService.getDiscs();
-        final DiscType[] result = discTransformer.toDiscTypeArray(discs);
+    public Response getDiscs(final String token) {
+        final Response.ResponseBuilder response = Response.status(STATUS_OK);
+        Object result;
 
-        return Response.status(Response.Status.OK).entity(result).build();
+        try {
+            this.authserviceOutbound.validateToken(token, "getDiscs");
+            final Disc[] discs = mediaService.getDiscs();
+            result = discTransformer.toDiscTypeArray(discs);
+        } catch (final BaseException exception) {
+            result = exceptionTransformer.handleException(exception);
+        }
+
+        response.entity(result);
+        return response.build();
     }
 
     /**
@@ -64,11 +85,12 @@ public class DiscService {
      * @param discType disc to add.
      * @return Response.
      */
-    public Response addDisc(String token, final DiscType discType) {
+    public Response addDisc(final String token, final DiscType discType) {
         final Disc disc = discTransformer.toDisc(discType);
         final Response.ResponseBuilder response = Response.status(STATUS_OK);
         MessageResponseType result;
         try {
+            this.authserviceOutbound.validateToken(token, "addDisc");
             mediaService.addDisc(disc);
             result = createOkMessageResponse();
         } catch (final BaseException exception) {
@@ -87,11 +109,12 @@ public class DiscService {
      * @param discType new disc data.
      * @return Response.
      */
-    public Response updateDisc(String token, final String barcode, final DiscType discType) {
+    public Response updateDisc(final String token, final String barcode, final DiscType discType) {
         final Disc disc = discTransformer.toDisc(discType);
         final Response.ResponseBuilder response = Response.status(STATUS_OK);
         MessageResponseType result;
         try {
+            this.authserviceOutbound.validateToken(token, "updateDisc");
             mediaService.updateDisc(barcode, disc);
             result = createOkMessageResponse();
         } catch (final BaseException exception) {

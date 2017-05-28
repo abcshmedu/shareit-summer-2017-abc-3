@@ -1,6 +1,5 @@
 package edu.hm.swa.sh.abc3.mediaservice.business;
 
-import edu.hm.swa.sh.abc3.mediaservice.business.validate.IdentifierValidator;
 import edu.hm.swa.sh.abc3.dto.Book;
 import edu.hm.swa.sh.abc3.dto.Disc;
 import edu.hm.swa.sh.abc3.exception.AuthorIsMissingException;
@@ -10,6 +9,7 @@ import edu.hm.swa.sh.abc3.exception.IdentifierIsImmutableException;
 import edu.hm.swa.sh.abc3.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.exception.TitleIsMissingException;
+import edu.hm.swa.sh.abc3.mediaservice.business.validate.IdentifierValidator;
 import edu.hm.swa.sh.abc3.mediaservice.persistence.PersistenceLayer;
 import edu.hm.swa.sh.abc3.mediaservice.persistence.simplepersistence.PersistenceLayerBean;
 
@@ -46,7 +46,7 @@ public class MediaServiceBean implements MediaService {
         if (title == null || title.length() < 1) {
             throw new TitleIsMissingException("Book title is missing.");
         }
-        if (persistenceLayer.getBook(book.getIsbn()) != null) {
+        if (persistenceLayer.getBook(simplifyIdentifier(isbn)) != null) {
             throw new IdentifierAlreadyExistsException("ISBN already exists.");
         }
 
@@ -69,7 +69,7 @@ public class MediaServiceBean implements MediaService {
         if (title == null || title.length() < 1) {
             throw new TitleIsMissingException("Disc title is missing.");
         }
-        if (persistenceLayer.getDisc(disc.getBarcode()) != null) {
+        if (persistenceLayer.getDisc(simplifyIdentifier(barcode)) != null) {
             throw new IdentifierAlreadyExistsException("Barcode already exists.");
         }
 
@@ -83,7 +83,7 @@ public class MediaServiceBean implements MediaService {
 
     @Override
     public Book getBook(final String isbn) {
-        return persistenceLayer.getBook(isbn);
+        return persistenceLayer.getBook(simplifyIdentifier(isbn));
     }
 
     @Override
@@ -93,7 +93,7 @@ public class MediaServiceBean implements MediaService {
 
     @Override
     public Disc getDisc(final String barcode) {
-        return persistenceLayer.getDisc(barcode);
+        return persistenceLayer.getDisc(simplifyIdentifier(barcode));
     }
 
     @Override
@@ -106,7 +106,7 @@ public class MediaServiceBean implements MediaService {
         if (oldData == null) {
             throw new InvalidIdentifierException("Book does not exist");
         }
-        if (!isbn.equals(book.getIsbn())) {
+        if (!simplifyIdentifier(isbn).equals(simplifyIdentifier(book.getIsbn()))) {
             throw new IdentifierIsImmutableException("ISBN could not be change");
         }
 
@@ -123,7 +123,7 @@ public class MediaServiceBean implements MediaService {
         if (oldDisc == null) {
             throw new InvalidIdentifierException("Disc does not exist");
         }
-        if (!barcode.equals(disc.getBarcode())) {
+        if (!simplifyIdentifier(barcode).equals(simplifyIdentifier(disc.getBarcode()))) {
             throw new IdentifierIsImmutableException("Barcode of disc can not be changed.");
         }
         persistenceLayer.updateDisc(simplifyIdentifier(barcode), disc);

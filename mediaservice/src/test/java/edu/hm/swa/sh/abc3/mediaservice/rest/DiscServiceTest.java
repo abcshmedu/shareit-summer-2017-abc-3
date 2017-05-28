@@ -8,6 +8,8 @@ import edu.hm.swa.sh.abc3.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.exception.TitleIsMissingException;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
+import edu.hm.swa.sh.abc3.mediaservice.common.AuthException;
+import edu.hm.swa.sh.abc3.mediaservice.rest.auth.AuthserviceOutbound;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.DiscTransformer;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.ExceptionTransformer;
 import edu.hm.swa.sh.abc3.types.MessageResponseType;
@@ -23,6 +25,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -46,6 +49,8 @@ public class DiscServiceTest {
     @Mock
     private DiscTransformer discTransformer;
     @Mock
+    private AuthserviceOutbound authserviceOutbound;
+    @Mock
     private ExceptionTransformer exceptionTransformer;
     @InjectMocks
     private DiscService underTest;
@@ -56,8 +61,7 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testAddDiscGoodCase() throws DirectorIsMissingException, IdentifierAlreadyExistsException,
-            TitleIsMissingException, InvalidIdentifierException {
+    public void testAddDiscGoodCase() throws DirectorIsMissingException, IdentifierAlreadyExistsException, TitleIsMissingException, InvalidIdentifierException, AuthException {
         final DiscType discType = new DiscType();
         discType.setBarcode(BARCODE);
         discType.setDirector(DIRECTOR);
@@ -68,6 +72,7 @@ public class DiscServiceTest {
 
         when(discTransformer.toDisc(discType)).thenReturn(disc);
         final Response result = underTest.addDisc("", discType);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
         verify(mediaService).addDisc(disc);
 
         final Response expected = createOkResponse().build();
@@ -76,8 +81,7 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testAddDiscExceptionMapping() throws DirectorIsMissingException, IdentifierAlreadyExistsException,
-            TitleIsMissingException, InvalidIdentifierException {
+    public void testAddDiscExceptionMapping() throws DirectorIsMissingException, IdentifierAlreadyExistsException, TitleIsMissingException, InvalidIdentifierException, AuthException {
         final DiscType discType = new DiscType();
         discType.setBarcode("123");
         discType.setDirector(DIRECTOR);
@@ -96,6 +100,7 @@ public class DiscServiceTest {
         when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
         doThrow(exception).when(mediaService).addDisc(disc);
         final Response result = underTest.addDisc("", discType);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
         verify(mediaService).addDisc(disc);
 
         final Response expected = createBaseResponse().entity(exceptionResponseType).build();
@@ -104,7 +109,7 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testGetDiscGoodCase() {
+    public void testGetDiscGoodCase() throws AuthException {
         final DiscType discType = new DiscType();
         discType.setBarcode(BARCODE);
         discType.setDirector(DIRECTOR);
@@ -116,6 +121,7 @@ public class DiscServiceTest {
         when(discTransformer.toDiscType(disc)).thenReturn(discType);
         when(mediaService.getDisc(BARCODE)).thenReturn(disc);
         final Response result = underTest.getDisc("", BARCODE);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
 
         final Response expected = createBaseResponse().entity(discType).build();
 
@@ -123,13 +129,14 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testGetDiscEmptyResponse() {
+    public void testGetDiscEmptyResponse() throws AuthException {
         final DiscType discType = new DiscType();
 
         when(mediaService.getDisc(BARCODE)).thenReturn(null);
         when(discTransformer.toDiscType(null)).thenReturn(discType);
 
         final Response result = underTest.getDisc("", BARCODE);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
 
         final Response expected = createBaseResponse().entity(discType).build();
 
@@ -137,7 +144,7 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testGetDiscsGoodCase() {
+    public void testGetDiscsGoodCase() throws AuthException {
         final DiscType discType1 = new DiscType();
         discType1.setBarcode(BARCODE);
         discType1.setDirector(DIRECTOR);
@@ -165,6 +172,7 @@ public class DiscServiceTest {
         when(discTransformer.toDiscTypeArray(discArray)).thenReturn(discArrayType);
 
         final Response result = underTest.getDiscs("");
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
 
         final Response expected = createBaseResponse().entity(discArrayType).build();
 
@@ -172,7 +180,7 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testGetDiscsEmptyResult() {
+    public void testGetDiscsEmptyResult() throws AuthException {
         final DiscType[] discTypeArray = new DiscType[0];
         final Disc[] discArray = new Disc[0];
 
@@ -180,6 +188,7 @@ public class DiscServiceTest {
         when(discTransformer.toDiscTypeArray(discArray)).thenReturn(discTypeArray);
 
         final Response result = underTest.getDiscs("");
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
 
         final Response expected = createBaseResponse().entity(discTypeArray).build();
 
@@ -187,8 +196,7 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testUpdateDiscsGoodCase() throws IdentifierIsImmutableException, InvalidIdentifierException,
-            IdentifierIsMissingException {
+    public void testUpdateDiscsGoodCase() throws IdentifierIsImmutableException, InvalidIdentifierException, IdentifierIsMissingException, AuthException {
         final DiscType discType = new DiscType();
         discType.setBarcode(BARCODE);
         discType.setDirector(DIRECTOR);
@@ -200,6 +208,7 @@ public class DiscServiceTest {
         when(discTransformer.toDisc(discType)).thenReturn(disc);
         final Response result = underTest.updateDisc("", BARCODE, discType);
         verify(mediaService).updateDisc(BARCODE, disc);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
 
         final Response expected = createOkResponse().build();
 
@@ -207,8 +216,7 @@ public class DiscServiceTest {
     }
 
     @Test
-    public void testUpdateBooksChangeBarcode() throws IdentifierIsImmutableException, InvalidIdentifierException,
-            IdentifierIsMissingException {
+    public void testUpdateBooksChangeBarcode() throws IdentifierIsImmutableException, InvalidIdentifierException, IdentifierIsMissingException, AuthException {
         final DiscType discType = new DiscType();
         discType.setBarcode(BARCODE);
         discType.setDirector(DIRECTOR);
@@ -228,6 +236,7 @@ public class DiscServiceTest {
         when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
         doThrow(exception).when(mediaService).updateDisc(BARCODE, disc);
         final Response result = underTest.updateDisc("", BARCODE, discType);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
         verify(mediaService).updateDisc(BARCODE, disc);
         final Response expected = createBaseResponse().entity(exceptionResponseType).build();
 

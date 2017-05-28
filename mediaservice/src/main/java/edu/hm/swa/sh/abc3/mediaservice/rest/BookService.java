@@ -2,9 +2,6 @@ package edu.hm.swa.sh.abc3.mediaservice.rest;
 
 import edu.hm.swa.sh.abc3.dto.Book;
 import edu.hm.swa.sh.abc3.exception.BaseException;
-import edu.hm.swa.sh.abc3.exception.IdentifierIsImmutableException;
-import edu.hm.swa.sh.abc3.exception.IdentifierIsMissingException;
-import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaServiceBean;
 import edu.hm.swa.sh.abc3.mediaservice.rest.auth.AuthserviceOutbound;
@@ -44,7 +41,7 @@ public class BookService {
      * @param bookType Book to add.
      * @return Response.
      */
-    public Response addBook(String token, final BookType bookType) {
+    public Response addBook(final String token, final BookType bookType) {
         final Book book = bookTransformer.toBook(bookType);
         final Response.ResponseBuilder response = Response.status(STATUS_OK);
         MessageResponseType result;
@@ -66,15 +63,20 @@ public class BookService {
      * @param isbn  ISBN of book.
      * @return Response.
      */
-    public Response getBook(String token, final String isbn) {
+    public Response getBook(final String token, final String isbn) {
+        final Response.ResponseBuilder response = Response.status(STATUS_OK);
+        Object result;
+
         try {
-            this.authserviceOutbound.validateToken(token, "addbook");
-        } catch (BaseException e) {
-            e.printStackTrace();
+            this.authserviceOutbound.validateToken(token, "getBook");
+            final Book book = mediaService.getBook(isbn);
+            result = bookTransformer.toBookType(book);
+        } catch (final BaseException exception) {
+            result = exceptionTransformer.handleException(exception);
         }
-        final Book book = mediaService.getBook(isbn);
-        final BookType bookType = bookTransformer.toBookType(book);
-        return Response.status(STATUS_OK).entity(bookType).build();
+
+        response.entity(result);
+        return response.build();
     }
 
     /**
@@ -83,11 +85,20 @@ public class BookService {
      * @param token user token.
      * @return Response.
      */
-    public Response getBooks(String token) {
-        final Book[] books = mediaService.getBooks();
-        final BookType[] result = bookTransformer.toBookTypeArray(books);
+    public Response getBooks(final String token) {
+        final Response.ResponseBuilder response = Response.status(STATUS_OK);
+        Object result;
 
-        return Response.status(Response.Status.OK).entity(result).build();
+        try {
+            this.authserviceOutbound.validateToken(token, "getBooks");
+            final Book[] books = mediaService.getBooks();
+            result = bookTransformer.toBookTypeArray(books);
+        } catch (final BaseException exception) {
+            result = exceptionTransformer.handleException(exception);
+        }
+
+        response.entity(result);
+        return response.build();
     }
 
     /**
@@ -98,15 +109,15 @@ public class BookService {
      * @param bookType new book data.
      * @return Response.
      */
-    public Response updateBooks(String token, final String isbn, final BookType bookType) {
+    public Response updateBooks(final String token, final String isbn, final BookType bookType) {
         final Response.ResponseBuilder response = Response.status(STATUS_OK);
         MessageResponseType result;
         try {
+            this.authserviceOutbound.validateToken(token, "updateBooks");
             final Book book = bookTransformer.toBook(bookType);
             mediaService.updateBook(isbn, book);
             result = createOkMessageResponse();
-        } catch (final IdentifierIsMissingException | InvalidIdentifierException | IdentifierIsImmutableException
-                exception) {
+        } catch (final BaseException exception) {
             result = exceptionTransformer.handleException(exception);
         }
         response.entity(result);

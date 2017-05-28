@@ -8,6 +8,8 @@ import edu.hm.swa.sh.abc3.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.exception.TitleIsMissingException;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
+import edu.hm.swa.sh.abc3.mediaservice.common.AuthException;
+import edu.hm.swa.sh.abc3.mediaservice.rest.auth.AuthserviceOutbound;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.BookTransformer;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.ExceptionTransformer;
 import edu.hm.swa.sh.abc3.types.MessageResponseType;
@@ -23,6 +25,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -38,11 +41,14 @@ public class BookServiceTest {
     private static final String ISBN_2 = "978-3-8882-9343-6";
     private static final String EXCEPTION_MESSAGE = "ISBN number is not valid.";
     private static final String EXCEPTION_MESSAGE_IMMUTABLE = "ISBN number is immutable.";
+    private static final String TOKEN = "token";
 
     @Mock
     private MediaService mediaService;
     @Mock
     private BookTransformer bookTransformer;
+    @Mock
+    private AuthserviceOutbound authserviceOutbound;
     @Mock
     private ExceptionTransformer exceptionTransformer;
     @InjectMocks
@@ -54,8 +60,7 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testAddBookGoodCase() throws TitleIsMissingException, IdentifierAlreadyExistsException,
-            AuthorIsMissingException, InvalidIdentifierException {
+    public void testAddBookGoodCase() throws TitleIsMissingException, IdentifierAlreadyExistsException, AuthorIsMissingException, InvalidIdentifierException, AuthException {
         final BookType bookType = new BookType();
         bookType.setIsbn(ISBN);
         bookType.setAuthor(AUTHOR);
@@ -64,7 +69,8 @@ public class BookServiceTest {
         final Book book = new Book(TITLE, AUTHOR, ISBN);
 
         when(bookTransformer.toBook(bookType)).thenReturn(book);
-        final Response result = underTest.addBook("", bookType);
+        final Response result = underTest.addBook(TOKEN, bookType);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
         verify(mediaService).addBook(book);
 
         final Response expected = createOkResponse().build();
@@ -73,8 +79,7 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testAddBookExceptionMapping() throws TitleIsMissingException, IdentifierAlreadyExistsException,
-            AuthorIsMissingException, InvalidIdentifierException {
+    public void testAddBookExceptionMapping() throws TitleIsMissingException, IdentifierAlreadyExistsException, AuthorIsMissingException, InvalidIdentifierException, AuthException {
         final BookType bookType = new BookType();
         bookType.setIsbn("123");
         bookType.setAuthor(AUTHOR);
@@ -92,7 +97,8 @@ public class BookServiceTest {
         doThrow(exception).when(mediaService).addBook(book);
         when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
 
-        final Response result = underTest.addBook("", bookType);
+        final Response result = underTest.addBook(TOKEN, bookType);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
 
         final Response expected = createBaseResponse().entity(exceptionResponseType).build();
 
@@ -100,7 +106,7 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testGetBookGoodCase() {
+    public void testGetBookGoodCase() throws AuthException {
         final BookType bookType = new BookType();
         bookType.setIsbn(ISBN);
         bookType.setAuthor(AUTHOR);
@@ -111,7 +117,8 @@ public class BookServiceTest {
         when(mediaService.getBook(ISBN)).thenReturn(book);
         when(bookTransformer.toBookType(book)).thenReturn(bookType);
 
-        final Response result = underTest.getBook("", ISBN);
+        final Response result = underTest.getBook(TOKEN, ISBN);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
 
         final Response expected = createBaseResponse().entity(bookType).build();
 
@@ -119,13 +126,14 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testGetBookEmptyResponse() {
+    public void testGetBookEmptyResponse() throws AuthException {
         final BookType bookType = new BookType();
 
         when(mediaService.getBook(ISBN)).thenReturn(null);
         when(bookTransformer.toBookType(null)).thenReturn(bookType);
 
-        final Response result = underTest.getBook("", ISBN);
+        final Response result = underTest.getBook(TOKEN, ISBN);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
 
         final Response expected = createBaseResponse().entity(bookType).build();
 
@@ -133,7 +141,7 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testGetBooksGoodCase() {
+    public void testGetBooksGoodCase() throws AuthException {
         final BookType bookType1 = new BookType();
         bookType1.setIsbn(ISBN);
         bookType1.setAuthor(AUTHOR);
@@ -158,7 +166,8 @@ public class BookServiceTest {
         when(mediaService.getBooks()).thenReturn(bookArray);
         when(bookTransformer.toBookTypeArray(bookArray)).thenReturn(bookTypeArray);
 
-        final Response result = underTest.getBooks("");
+        final Response result = underTest.getBooks(TOKEN);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
 
         final Response expected = createBaseResponse().entity(bookTypeArray).build();
 
@@ -166,14 +175,15 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testGetBooksEmptyResult() {
+    public void testGetBooksEmptyResult() throws AuthException {
         final BookType[] bookTypeArray = new BookType[0];
         final Book[] bookArray = new Book[0];
 
         when(mediaService.getBooks()).thenReturn(bookArray);
         when(bookTransformer.toBookTypeArray(bookArray)).thenReturn(bookTypeArray);
 
-        final Response result = underTest.getBooks("");
+        final Response result = underTest.getBooks(TOKEN);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
 
         final Response expected = createBaseResponse().entity(bookTypeArray).build();
 
@@ -181,8 +191,7 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testUpdateBooksGoodCase() throws IdentifierIsImmutableException, InvalidIdentifierException,
-            IdentifierIsMissingException {
+    public void testUpdateBooksGoodCase() throws IdentifierIsImmutableException, InvalidIdentifierException, IdentifierIsMissingException, AuthException {
         final BookType bookType = new BookType();
         bookType.setIsbn(ISBN);
         bookType.setAuthor(AUTHOR);
@@ -191,7 +200,8 @@ public class BookServiceTest {
         final Book book = new Book(TITLE, AUTHOR, ISBN);
 
         when(bookTransformer.toBook(bookType)).thenReturn(book);
-        final Response result = underTest.updateBooks("", ISBN, bookType);
+        final Response result = underTest.updateBooks(TOKEN, ISBN, bookType);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
         verify(mediaService).updateBook(ISBN, book);
 
         final Response expected = createOkResponse().build();
@@ -200,8 +210,7 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testUpdateBooksChangeISBN() throws IdentifierIsImmutableException, InvalidIdentifierException,
-            IdentifierIsMissingException {
+    public void testUpdateBooksChangeISBN() throws IdentifierIsImmutableException, InvalidIdentifierException, IdentifierIsMissingException, AuthException {
         final BookType bookType = new BookType();
         bookType.setIsbn(ISBN_2);
         bookType.setAuthor(AUTHOR);
@@ -219,7 +228,8 @@ public class BookServiceTest {
         when(bookTransformer.toBook(bookType)).thenReturn(book);
         when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
         doThrow(exception).when(mediaService).updateBook(ISBN, book);
-        final Response result = underTest.updateBooks("", ISBN, bookType);
+        final Response result = underTest.updateBooks(TOKEN, ISBN, bookType);
+        verify(authserviceOutbound).validateToken(anyString(), anyString());
         verify(mediaService).updateBook(ISBN, book);
         final Response expected = createBaseResponse().entity(exceptionResponseType).build();
 

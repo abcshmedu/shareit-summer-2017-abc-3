@@ -109,8 +109,8 @@ public class MediaServiceBeanTest {
     public void testUpdateBookGoodCase() throws IdentifierIsImmutableException, InvalidIdentifierException,
             IdentifierIsMissingException {
         final Book book = new Book(TITLE, AUTHOR, ISBN);
-        when(persistenceLayerMock.getBook(ISBN)).thenReturn(book);
-        underTest.updateBook(ISBN, book);
+        when(persistenceLayerMock.getBook(CLEANED_ISBN)).thenReturn(book);
+        underTest.updateBook(CLEANED_ISBN, book);
         verify(persistenceLayerMock).updateBook(CLEANED_ISBN, book);
     }
 
