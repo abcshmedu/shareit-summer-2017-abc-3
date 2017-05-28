@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface AuthPersistenceLayer {
     /**
-     * Returns a user or null;
+     * Returns a user or null.
      *
      * @param username username of user.
      * @return UserDTO or null if user not exists.
@@ -19,7 +19,7 @@ public interface AuthPersistenceLayer {
     UserDTO getUser(String username);
 
     /**
-     * Returns a user or null;
+     * Returns a user or null.
      *
      * @param userid userid of user.
      * @return UserDTO or null if user not exists.
@@ -41,7 +41,7 @@ public interface AuthPersistenceLayer {
     void updateToken(TokenDTO token);
 
     /**
-     * Returns a token or null;
+     * Returns a token or null.
      *
      * @param token TokenDTO.
      * @return TokenDTO or null if no token was found.

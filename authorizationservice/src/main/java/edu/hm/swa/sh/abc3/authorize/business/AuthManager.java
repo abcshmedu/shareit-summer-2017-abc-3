@@ -16,13 +16,13 @@ public interface AuthManager {
      * @return Token.
      * @throws InvalidCredentialsException if credentials are invalid.
      */
-    TokenDTO loginUser(final CredentialsDTO credentials) throws InvalidCredentialsException;
+    TokenDTO loginUser(CredentialsDTO credentials) throws InvalidCredentialsException;
 
     /**
      * Logout the user for given token.
      * @param token CredentialsDTO.
      */
-    void logoutUser(final CredentialsDTO token);
+    void logoutUser(CredentialsDTO token);
 
     /**
      * Validate if the token is valid and user have permission to call method.
@@ -32,6 +32,6 @@ public interface AuthManager {
      * @throws InvalidTokenException if token is invalid.
      * @throws UnauthorizedAccessException if method is not allowed for user.
      */
-    void validateToken(final CredentialsDTO token, final String method) throws InvalidCredentialsException,
+    void validateToken(CredentialsDTO token, String method) throws InvalidCredentialsException,
             InvalidTokenException, UnauthorizedAccessException;
 }

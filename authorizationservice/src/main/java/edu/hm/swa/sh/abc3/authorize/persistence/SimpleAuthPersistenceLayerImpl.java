@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Implementation of AuthPersistenceLayer.
  */
-public class SimpleAuthPersistenceLayerImpl implements AuthPersistenceLayer {
+public final class SimpleAuthPersistenceLayerImpl implements AuthPersistenceLayer {
     private static SimpleAuthPersistenceLayerImpl instance;
     private static List<UserDTO> userList;
     private static List<String> adminPermissionList;
@@ -30,6 +30,9 @@ public class SimpleAuthPersistenceLayerImpl implements AuthPersistenceLayer {
         return instance;
     }
 
+    /**
+     * Init lists for static data.
+     */
     private static void initPersistence() {
         userList = new ArrayList<>();
         userList.add(new UserDTO(1L, "shareituser", "shareitpassword", Permission.REGISTRED));

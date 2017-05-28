@@ -11,9 +11,11 @@ public class UserDTO {
 
     /**
      * Cstr.
-     * @param userId user id.
+     *
+     * @param userId   user id.
      * @param username username.
-     * @param secret secret.
+     * @param secret   secret.
+     * @param userrole Users permission role.
      */
     public UserDTO(final long userId, final String username, final String secret, final Permission userrole) {
         this.userId = userId;
@@ -24,6 +26,7 @@ public class UserDTO {
 
     /**
      * User id.
+     *
      * @return UserId.
      */
     public long getUserId() {
@@ -32,6 +35,7 @@ public class UserDTO {
 
     /**
      * Username.
+     *
      * @return Username.
      */
     public String getUsername() {
@@ -40,6 +44,7 @@ public class UserDTO {
 
     /**
      * Secret.
+     *
      * @return Secret.
      */
     public String getSecret() {
@@ -48,6 +53,7 @@ public class UserDTO {
 
     /**
      * Userrole.
+     *
      * @return userrole.
      */
     public Permission getUserrole() {

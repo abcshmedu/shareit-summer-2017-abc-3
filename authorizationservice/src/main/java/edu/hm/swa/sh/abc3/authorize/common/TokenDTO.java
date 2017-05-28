@@ -12,6 +12,7 @@ public class TokenDTO {
      * Cstr.
      * @param token Token.
      * @param userid Userid.
+     * @param timeToLive Token ttl.
      */
     public TokenDTO(final String token, final long userid, final long timeToLive) {
         this.token = token;
