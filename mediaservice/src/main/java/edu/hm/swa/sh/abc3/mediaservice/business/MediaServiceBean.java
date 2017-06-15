@@ -114,8 +114,8 @@ public class MediaServiceBean implements MediaService {
     }
 
     @Override
-    public void updateDisc(final String barcode, final Disc disc)
-            throws IdentifierIsMissingException, InvalidIdentifierException, IdentifierIsImmutableException {
+    public void updateDisc(final String barcode, final Disc disc) throws IdentifierIsMissingException,
+            InvalidIdentifierException, IdentifierIsImmutableException {
         if (barcode == null || "".equals(barcode)) {
             throw new IdentifierIsMissingException("Parameter 'barcode' should not be null or empty.");
         }

@@ -32,7 +32,7 @@ public class PersistenceLayerBean implements PersistenceLayer {
     /**
      * Private constructor.
      */
-    private PersistenceLayerBean() {
+    public PersistenceLayerBean() {
     }
 
     /**

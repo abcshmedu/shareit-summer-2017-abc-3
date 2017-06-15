@@ -23,6 +23,11 @@ public class RestService {
     private BookService bookService = new BookService();
     private DiscService discService = new DiscService();
 
+    @GET
+    public String helloWorld() {
+        return "Hello World!";
+    }
+
     /**
      * Create a new book.
      *

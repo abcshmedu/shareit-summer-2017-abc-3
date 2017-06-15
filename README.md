@@ -28,9 +28,7 @@ Es wurden für die möglichen auftretenen Fehler selbstständige Exceptions erst
   | -160 | DIRECTOR_MISSING | Wenn der Direktor der Disc fehlt. |
  
  ## Beschreibung REST Schnittstelle
- Der Herokulink ist https://vast-shelf-77148.herokuapp.com
- 
- Die REST Schnittstelle hat den Prefix /media
+ Der Herokulink ist https://vast-shelf-77148.herokuapp.com/resource/media
  
  Folgende Methoden können aufgerufen werden:
  

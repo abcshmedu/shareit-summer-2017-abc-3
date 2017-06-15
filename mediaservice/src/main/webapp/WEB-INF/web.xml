@@ -16,7 +16,11 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ShareIt-Rest</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/resource/*</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>org.apache.webbeans.servlet.WebBeansConfigurationListener</listener-class>
+    </listener>
 
 </web-app>

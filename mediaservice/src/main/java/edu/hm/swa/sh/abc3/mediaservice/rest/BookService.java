@@ -89,13 +89,13 @@ public class BookService {
         final Response.ResponseBuilder response = Response.status(STATUS_OK);
         Object result;
 
-        try {
-            this.authserviceOutbound.validateToken(token, "getBooks");
-            final Book[] books = mediaService.getBooks();
-            result = bookTransformer.toBookTypeArray(books);
-        } catch (final BaseException exception) {
-            result = exceptionTransformer.handleException(exception);
-        }
+        //        try {
+        //            this.authserviceOutbound.validateToken(token, "getBooks");
+        final Book[] books = mediaService.getBooks();
+        result = bookTransformer.toBookTypeArray(books);
+        //        } catch (final BaseException exception) {
+        //            result = exceptionTransformer.handleException(exception);
+        //        }
 
         response.entity(result);
         return response.build();

@@ -10,12 +10,19 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
     <artifactId>mediaservice</artifactId>
+
+    <properties>
+        <owb.version>1.7.3</owb.version>
+    </properties>
+
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <groupId>com.heroku.agent</groupId>
+            <artifactId>heroku-javaagent</artifactId>
+            <version>1.5</version>
+            <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>asm</groupId>
             <artifactId>asm</artifactId>
@@ -26,24 +33,91 @@
             <artifactId>json</artifactId>
             <version>20140107</version>
         </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>1.10.19</version>
+            <version>2.7.21</version>
+        </dependency>
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.2.10.Final</version>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>2.25.1</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.2.10.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.8</version>
+        </dependency>
+
+        <!-- Dependencies on ohter modules-->
+        <dependency>
+            <groupId>edu.hm.webapp</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- Embedded Tomcat -->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tomcat.embed</groupId>-->
+            <!--<artifactId>tomcat-embed-core</artifactId>-->
+            <!--<version>${tomcat.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tomcat.embed</groupId>-->
+            <!--<artifactId>tomcat-embed-logging-juli</artifactId>-->
+            <!--<version>${tomcat.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tomcat.embed</groupId>-->
+            <!--<artifactId>tomcat-embed-jasper</artifactId>-->
+            <!--<version>${tomcat.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tomcat</groupId>-->
+            <!--<artifactId>tomcat-jasper</artifactId>-->
+            <!--<version>${tomcat.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tomcat</groupId>-->
+            <!--<artifactId>tomcat-jasper-el</artifactId>-->
+            <!--<version>${tomcat.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tomcat</groupId>-->
+            <!--<artifactId>tomcat-jsp-api</artifactId>-->
+            <!--<version>${tomcat.version}</version>-->
+        <!--</dependency>-->
+
+        <!-- Jersey -->
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.25.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-jetty-servlet</artifactId>
             <version>2.25.1</version>
         </dependency>
         <dependency>
@@ -56,21 +130,49 @@
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
         </dependency>
+
         <dependency>
-            <groupId>org.jboss.weld.se</groupId>
-            <artifactId>weld-se</artifactId>
-            <version>1.1.2.Final</version>
+            <groupId>org.glassfish.jersey</groupId>
+            <artifactId>jersey-bom</artifactId>
+            <version>2.26-b03</version>
+            <type>pom</type>
+            <scope>import</scope>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.jersey.containers.glassfish</groupId>
-            <artifactId>jersey-gf-cdi-ban-custom-hk2-binding</artifactId>
-            <version>2.9</version>
+            <groupId>org.glassfish.jersey.bundles</groupId>
+            <artifactId>jaxrs-ri</artifactId>
+            <version>2.26-b03</version>
+        </dependency>
+
+        <!-- Openwebbeans -->
+        <!-- OWB specific dependencies -->
+        <dependency>
+            <groupId>org.apache.openwebbeans</groupId>
+            <artifactId>openwebbeans-impl</artifactId>
+            <version>${owb.version}</version>
         </dependency>
         <dependency>
-            <groupId>edu.hm.webapp</groupId>
-            <artifactId>common</artifactId>
-            <version>${parent.version}</version>
+            <groupId>org.apache.openwebbeans</groupId>
+            <artifactId>openwebbeans-spi</artifactId>
+            <version>${owb.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.openwebbeans</groupId>
+            <artifactId>openwebbeans-web</artifactId>
+            <version>${owb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openwebbeans</groupId>
+            <artifactId>openwebbeans-resource</artifactId>
+            <version>${owb.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.openwebbeans</groupId>
+            <artifactId>openwebbeans-tomcat7</artifactId>
+            <version>${owb.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -78,35 +180,9 @@
         <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.3.v20170317</version>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>2.3</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals><goal>copy</goal></goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.eclipse.jetty</groupId>
-                                    <artifactId>jetty-runner</artifactId>
-                                    <version>9.3.3.v20150827</version>
-                                    <destFileName>jetty-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.9</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -115,8 +191,44 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>copy</goal></goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.github.jsimone</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>7.0.57.2</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.mojo</groupId>-->
+                <!--<artifactId>appassembler-maven-plugin</artifactId>-->
+                <!--<version>1.1.1</version>-->
+                <!--<configuration>-->
+                    <!--<assembleDirectory>target</assembleDirectory>-->
+                    <!--<programs>-->
+                        <!--<program>-->
+                            <!--<mainClass>launch.Main</mainClass>-->
+                            <!--<name>webapp</name>-->
+                        <!--</program>-->
+                    <!--</programs>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>assemble</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>com.heroku.sdk</groupId>
                 <artifactId>heroku-maven-plugin</artifactId>
