@@ -2,12 +2,10 @@ package edu.hm.swa.sh.abc3.mediaservice.business.validate;
 
 import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
 
-import javax.enterprise.context.RequestScoped;
 
 /**
  * Checks if a ISBN number is valid.
  */
-@RequestScoped
 public class IdentifierValidator {
     private static final int IDENTIFIER_LENGTH = 13;
 

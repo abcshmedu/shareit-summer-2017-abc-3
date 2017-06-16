@@ -1,5 +1,6 @@
 package edu.hm.swa.sh.abc3.mediaservice.rest;
 
+import com.google.inject.Inject;
 import edu.hm.swa.sh.abc3.types.media.BookType;
 import edu.hm.swa.sh.abc3.types.media.DiscType;
 
@@ -17,11 +18,21 @@ import javax.ws.rs.core.Response;
 /**
  * REST Service outbound implementation.
  */
-@Path("media")
+@Path("/media")
 @Produces(MediaType.APPLICATION_JSON)
 public class RestService {
-    private BookService bookService = new BookService();
-    private DiscService discService = new DiscService();
+    private BookService bookService;
+    private DiscService discService;
+
+    @Inject
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    @Inject
+    public void setDiscService(DiscService discService) {
+        this.discService = discService;
+    }
 
     /**
      * Create a new book.
