@@ -1,4 +1,4 @@
-package edu.hm.swa.sh.abc3.mediaservice.rest;
+package edu.hm;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -8,6 +8,10 @@ import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaServiceBean;
 import edu.hm.swa.sh.abc3.mediaservice.persistence.PersistenceLayer;
 import edu.hm.swa.sh.abc3.mediaservice.persistence.simplepersistence.PersistenceLayerBean;
+import edu.hm.swa.sh.abc3.mediaservice.rest.BookService;
+import edu.hm.swa.sh.abc3.mediaservice.rest.BookServiceImpl;
+import edu.hm.swa.sh.abc3.mediaservice.rest.DiscService;
+import edu.hm.swa.sh.abc3.mediaservice.rest.RestService;
 
 /**
  * Context Listener to enable usage of google guice together with jersey.
@@ -19,8 +23,9 @@ public class ShareitServletContextListener extends GuiceServletContextListener {
     private static final Injector INJECTOR = Guice.createInjector(new ServletModule() {
         @Override
         protected void configureServlets() {
+            bind(RestService.class);
             bind(MediaService.class).to(MediaServiceBean.class);
-            bind(BookService.class).toInstance(new BookService());
+            bind(BookService.class).to(BookServiceImpl.class);
             bind(DiscService.class).toInstance(new DiscService());
             bind(PersistenceLayer.class).to(PersistenceLayerBean.class);
         }

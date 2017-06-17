@@ -80,12 +80,7 @@
             <artifactId>jackson-jaxrs-json-provider</artifactId>
             <version>2.6.1</version>
         </dependency>
-        <!--- JWZ -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>0.7.0</version>
-        </dependency>
+
         <!-- Guice (dependency Injection!!) -->
         <dependency>
             <groupId>com.google.inject</groupId>
@@ -109,17 +104,13 @@
             <artifactId>mockito-all</artifactId>
             <version>1.9.5</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.2</version>
-        </dependency>
+
         <dependency>
             <groupId>edu.hm.webapp</groupId>
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
 
     <build>

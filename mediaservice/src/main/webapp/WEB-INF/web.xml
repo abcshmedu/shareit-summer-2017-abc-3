@@ -9,22 +9,6 @@
     </welcome-file-list>
 
     <servlet>
-        <servlet-name>Jersey Web Application</servlet-name>
-        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-        <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>edu.hm.swa.sh.abc3.mediaservice.rest.</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Jersey Web Application</servlet-name>
-        <url-pattern>/convert/*</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
         <servlet-name>Media Resource</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
@@ -37,7 +21,7 @@
         </init-param>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>edu.hm.swa.sh.abc3.mediaservice.rest.ShareItApplication</param-value>
+            <param-value>edu.hm.ShareItApplication</param-value>
         </init-param>
 
         <load-on-startup>1</load-on-startup>
@@ -47,9 +31,17 @@
         <servlet-name>Media Resource</servlet-name>
         <url-pattern>/shareit/*</url-pattern>
     </servlet-mapping>
+    <!--<filter-mapping>-->
+        <!--<filter-name>guiceFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
+    <!--<filter>-->
+        <!--<filter-name>guiceFilter</filter-name>-->
+        <!--<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>-->
+    <!--</filter>-->
     <listener>
         <listener-class>
-            edu.hm.swa.sh.abc3.mediaservice.rest.ShareitServletContextListener
+            edu.hm.ShareitServletContextListener
         </listener-class>
     </listener>
 </web-app>
