@@ -67,7 +67,7 @@
             <artifactId>commons-validator</artifactId>
             <version>1.4.0</version>
         </dependency>
-      
+
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-jetty-servlet</artifactId>
@@ -115,34 +115,34 @@
 
         <!-- Embedded Tomcat -->
         <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat.embed</groupId>-->
-            <!--<artifactId>tomcat-embed-core</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
+        <!--<groupId>org.apache.tomcat.embed</groupId>-->
+        <!--<artifactId>tomcat-embed-core</artifactId>-->
+        <!--<version>${tomcat.version}</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat.embed</groupId>-->
-            <!--<artifactId>tomcat-embed-logging-juli</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
+        <!--<groupId>org.apache.tomcat.embed</groupId>-->
+        <!--<artifactId>tomcat-embed-logging-juli</artifactId>-->
+        <!--<version>${tomcat.version}</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat.embed</groupId>-->
-            <!--<artifactId>tomcat-embed-jasper</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
+        <!--<groupId>org.apache.tomcat.embed</groupId>-->
+        <!--<artifactId>tomcat-embed-jasper</artifactId>-->
+        <!--<version>${tomcat.version}</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat</groupId>-->
-            <!--<artifactId>tomcat-jasper</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
+        <!--<groupId>org.apache.tomcat</groupId>-->
+        <!--<artifactId>tomcat-jasper</artifactId>-->
+        <!--<version>${tomcat.version}</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat</groupId>-->
-            <!--<artifactId>tomcat-jasper-el</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
+        <!--<groupId>org.apache.tomcat</groupId>-->
+        <!--<artifactId>tomcat-jasper-el</artifactId>-->
+        <!--<version>${tomcat.version}</version>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat</groupId>-->
-            <!--<artifactId>tomcat-jsp-api</artifactId>-->
-            <!--<version>${tomcat.version}</version>-->
+        <!--<groupId>org.apache.tomcat</groupId>-->
+        <!--<artifactId>tomcat-jsp-api</artifactId>-->
+        <!--<version>${tomcat.version}</version>-->
         <!--</dependency>-->
 
         <!-- Jersey -->
@@ -181,16 +181,18 @@
             <artifactId>guice-bridge</artifactId>
             <version>2.5.0-b32</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.9.5</version>
+        </dependency>
+        <dependency>
             <groupId>org.glassfish.jersey.bundles</groupId>
             <artifactId>jaxrs-ri</artifactId>
             <version>2.26-b03</version>
         </dependency>
-<dependency>
+        <dependency>
             <groupId>edu.hm.webapp</groupId>
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
@@ -215,7 +217,9 @@
                     </execution>
                     <execution>
                         <phase>package</phase>
-                        <goals><goal>copy</goal></goals>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
