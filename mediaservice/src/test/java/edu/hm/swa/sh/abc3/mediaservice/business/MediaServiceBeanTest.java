@@ -9,6 +9,7 @@ import edu.hm.swa.sh.abc3.exception.IdentifierIsImmutableException;
 import edu.hm.swa.sh.abc3.exception.IdentifierIsMissingException;
 import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.exception.TitleIsMissingException;
+import edu.hm.swa.sh.abc3.mediaservice.business.validate.IdentifierValidator;
 import edu.hm.swa.sh.abc3.mediaservice.persistence.PersistenceLayer;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,6 +39,8 @@ public class MediaServiceBeanTest {
     private MediaServiceBean underTest;
     @Mock
     private PersistenceLayer persistenceLayerMock;
+    @Mock
+    private IdentifierValidator identifierValidatorMock;
 
     @Before
     public void setUp() {
@@ -69,6 +72,7 @@ public class MediaServiceBeanTest {
             AuthorIsMissingException, InvalidIdentifierException {
         final Book book = new Book(TITLE, AUTHOR, ISBN);
         when(persistenceLayerMock.getBook(anyString())).thenReturn(null);
+        when(identifierValidatorMock.checkIdentifier(anyString())).thenReturn(true);
         underTest.addBook(book);
         verify(persistenceLayerMock).storeBook(CLEANED_ISBN, book);
     }
@@ -77,7 +81,7 @@ public class MediaServiceBeanTest {
     public void testAddBookTitleMissing() throws TitleIsMissingException, IdentifierAlreadyExistsException,
             AuthorIsMissingException, InvalidIdentifierException {
         final Book book = new Book("", AUTHOR, ISBN);
-        when(persistenceLayerMock.getBook(anyString())).thenReturn(null);
+        when(identifierValidatorMock.checkIdentifier(anyString())).thenReturn(true);
         underTest.addBook(book);
     }
 
@@ -85,7 +89,7 @@ public class MediaServiceBeanTest {
     public void testAddBookAuthorMissing() throws TitleIsMissingException, IdentifierAlreadyExistsException,
             AuthorIsMissingException, InvalidIdentifierException {
         final Book book = new Book(TITLE, "", ISBN);
-        when(persistenceLayerMock.getBook(anyString())).thenReturn(null);
+        when(identifierValidatorMock.checkIdentifier(anyString())).thenReturn(true);
         underTest.addBook(book);
     }
 
@@ -93,7 +97,6 @@ public class MediaServiceBeanTest {
     public void testAddBookISBNInvalid() throws TitleIsMissingException, IdentifierAlreadyExistsException,
             AuthorIsMissingException, InvalidIdentifierException {
         final Book book = new Book(TITLE, AUTHOR, "123");
-        when(persistenceLayerMock.getBook(anyString())).thenReturn(null);
         underTest.addBook(book);
     }
 
@@ -102,6 +105,7 @@ public class MediaServiceBeanTest {
             AuthorIsMissingException, InvalidIdentifierException {
         final Book book = new Book(TITLE, AUTHOR, ISBN);
         when(persistenceLayerMock.getBook(anyString())).thenReturn(book);
+        when(identifierValidatorMock.checkIdentifier(anyString())).thenReturn(true);
         underTest.addBook(book);
     }
 
@@ -118,7 +122,6 @@ public class MediaServiceBeanTest {
     public void testUpdateBookISBNMissing() throws IdentifierIsImmutableException, InvalidIdentifierException,
             IdentifierIsMissingException {
         final Book book = new Book(TITLE, AUTHOR, ISBN);
-        when(persistenceLayerMock.getBook(ISBN)).thenReturn(book);
         underTest.updateBook("", book);
     }
 
@@ -165,6 +168,7 @@ public class MediaServiceBeanTest {
             IdentifierAlreadyExistsException, TitleIsMissingException {
         final Disc disc = new Disc(TITLE, BARCODE, DIRECTOR, FSK);
         when(persistenceLayerMock.getDisc(anyString())).thenReturn(null);
+        when(identifierValidatorMock.checkIdentifier(anyString())).thenReturn(true);
         underTest.addDisc(disc);
         verify(persistenceLayerMock).storeDisc(BARCODE, disc);
     }
@@ -173,7 +177,7 @@ public class MediaServiceBeanTest {
     public void testAddDiscTitleMissing() throws DirectorIsMissingException, InvalidIdentifierException,
             IdentifierAlreadyExistsException, TitleIsMissingException {
         final Disc disc = new Disc("", BARCODE, DIRECTOR, FSK);
-        when(persistenceLayerMock.getDisc(anyString())).thenReturn(null);
+        when(identifierValidatorMock.checkIdentifier(anyString())).thenReturn(true);
         underTest.addDisc(disc);
     }
 
@@ -181,7 +185,7 @@ public class MediaServiceBeanTest {
     public void testAddDiscDirectorMissing() throws DirectorIsMissingException, InvalidIdentifierException,
             IdentifierAlreadyExistsException, TitleIsMissingException {
         final Disc disc = new Disc(TITLE, BARCODE, "", FSK);
-        when(persistenceLayerMock.getDisc(anyString())).thenReturn(null);
+        when(identifierValidatorMock.checkIdentifier(anyString())).thenReturn(true);
         underTest.addDisc(disc);
     }
 
@@ -189,7 +193,6 @@ public class MediaServiceBeanTest {
     public void testAddDiscBarcodeInvalid() throws DirectorIsMissingException, InvalidIdentifierException,
             IdentifierAlreadyExistsException, TitleIsMissingException {
         final Disc disc = new Disc(TITLE, "123", DIRECTOR, FSK);
-        when(persistenceLayerMock.getDisc(anyString())).thenReturn(null);
         underTest.addDisc(disc);
     }
 
@@ -198,6 +201,7 @@ public class MediaServiceBeanTest {
             InvalidIdentifierException, TitleIsMissingException {
         final Disc disc = new Disc(TITLE, BARCODE, DIRECTOR, FSK);
         when(persistenceLayerMock.getDisc(anyString())).thenReturn(disc);
+        when(identifierValidatorMock.checkIdentifier(anyString())).thenReturn(true);
         underTest.addDisc(disc);
     }
 
@@ -214,7 +218,6 @@ public class MediaServiceBeanTest {
     public void testUpdateDiscBarcodeMissing() throws IdentifierIsImmutableException, InvalidIdentifierException,
             IdentifierIsMissingException {
         final Disc disc = new Disc(TITLE, BARCODE, DIRECTOR, FSK);
-        when(persistenceLayerMock.getDisc(BARCODE)).thenReturn(disc);
         underTest.updateDisc("", disc);
     }
 

@@ -325,8 +325,6 @@ public class BookServiceTest {
         doThrow(exception).when(authserviceOutbound).validateToken(anyString(), anyString());
         when(exceptionTransformer.handleException(exception)).thenReturn(exceptionResponseType);
 
-        when(bookTransformer.toBook(bookType)).thenReturn(book);
-
         final Response result = underTest.updateBooks(TOKEN, ISBN, bookType);
         verify(mediaService, never()).updateBook(ISBN, book);
 
