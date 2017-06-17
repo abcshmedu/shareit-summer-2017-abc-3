@@ -21,14 +21,10 @@ import javax.ws.rs.core.Response;
 @Path("/media")
 @Produces(MediaType.APPLICATION_JSON)
 public class RestService {
-    private final BookService bookService;
-    private final DiscService discService;
-
     @Inject
-    public RestService(BookService bookService, DiscService discService) {
-        this.bookService = bookService;
-        this.discService = discService;
-    }
+    private BookService bookService;
+    @Inject
+    private DiscService discService;
 
     @GET
     public String helloWorld() {

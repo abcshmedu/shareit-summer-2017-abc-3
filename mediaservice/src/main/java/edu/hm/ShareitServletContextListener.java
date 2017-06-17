@@ -9,7 +9,6 @@ import edu.hm.swa.sh.abc3.mediaservice.business.MediaServiceBean;
 import edu.hm.swa.sh.abc3.mediaservice.persistence.PersistenceLayer;
 import edu.hm.swa.sh.abc3.mediaservice.persistence.simplepersistence.PersistenceLayerBean;
 import edu.hm.swa.sh.abc3.mediaservice.rest.BookService;
-import edu.hm.swa.sh.abc3.mediaservice.rest.BookServiceImpl;
 import edu.hm.swa.sh.abc3.mediaservice.rest.DiscService;
 import edu.hm.swa.sh.abc3.mediaservice.rest.RestService;
 
@@ -25,8 +24,8 @@ public class ShareitServletContextListener extends GuiceServletContextListener {
         protected void configureServlets() {
             bind(RestService.class);
             bind(MediaService.class).to(MediaServiceBean.class);
-            bind(BookService.class).to(BookServiceImpl.class);
-            bind(DiscService.class).toInstance(new DiscService());
+            bind(BookService.class);
+            bind(DiscService.class);
             bind(PersistenceLayer.class).to(PersistenceLayerBean.class);
         }
     });

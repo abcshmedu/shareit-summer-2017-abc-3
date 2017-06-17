@@ -11,23 +11,17 @@ import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
 import edu.hm.swa.sh.abc3.exception.TitleIsMissingException;
 import edu.hm.swa.sh.abc3.mediaservice.business.validate.IdentifierValidator;
 import edu.hm.swa.sh.abc3.mediaservice.persistence.PersistenceLayer;
-import edu.hm.swa.sh.abc3.mediaservice.persistence.simplepersistence.PersistenceLayerBean;
+
+import javax.inject.Inject;
 
 /**
  * Implementation of MediaService.
  */
 public class MediaServiceBean implements MediaService {
-
+    @Inject
     private PersistenceLayer persistenceLayer;
+    @Inject
     private IdentifierValidator identifierValidator;
-
-    /**
-     * Cstr.
-     */
-    public MediaServiceBean() {
-        this.persistenceLayer = PersistenceLayerBean.getInstance();
-        this.identifierValidator = new IdentifierValidator();
-    }
 
     @Override
     public void addBook(final Book book) throws IdentifierAlreadyExistsException, InvalidIdentifierException,

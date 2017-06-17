@@ -5,6 +5,7 @@ import edu.hm.swa.sh.abc3.dto.Disc;
 import edu.hm.swa.sh.abc3.dto.Medium;
 import edu.hm.swa.sh.abc3.mediaservice.persistence.PersistenceLayer;
 
+import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -15,26 +16,8 @@ import java.util.Set;
  * Objects stored in HashMap instead in database.
  * I know, very simple but for the first step enough I think.
  */
+@Singleton
 public class PersistenceLayerBean implements PersistenceLayer {
-    private static PersistenceLayerBean instance;
-
-    /**
-     * To make persistence layer singleton.
-     * @return singleton instance of this class.
-     */
-    public static PersistenceLayerBean getInstance() {
-        if (instance == null) {
-            instance = new PersistenceLayerBean();
-        }
-        return instance;
-    }
-
-    /**
-     * Private constructor.
-     */
-    public PersistenceLayerBean() {
-    }
-
     /**
      * HashMap for books, the key is the ISBN.
      */

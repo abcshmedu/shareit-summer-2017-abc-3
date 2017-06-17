@@ -3,13 +3,13 @@ package edu.hm.swa.sh.abc3.mediaservice.rest;
 import edu.hm.swa.sh.abc3.dto.Disc;
 import edu.hm.swa.sh.abc3.exception.BaseException;
 import edu.hm.swa.sh.abc3.mediaservice.business.MediaService;
-import edu.hm.swa.sh.abc3.mediaservice.business.MediaServiceBean;
 import edu.hm.swa.sh.abc3.mediaservice.rest.auth.AuthserviceOutbound;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.DiscTransformer;
 import edu.hm.swa.sh.abc3.mediaservice.rest.transformer.ExceptionTransformer;
 import edu.hm.swa.sh.abc3.types.MessageResponseType;
 import edu.hm.swa.sh.abc3.types.media.DiscType;
 
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 /**
@@ -17,21 +17,14 @@ import javax.ws.rs.core.Response;
  */
 public class DiscService {
     private static final int STATUS_OK = 200;
-
+    @Inject
     private MediaService mediaService;
+    @Inject
     private DiscTransformer discTransformer;
+    @Inject
     private ExceptionTransformer exceptionTransformer;
+    @Inject
     private AuthserviceOutbound authserviceOutbound;
-
-    /**
-     * Cstr.
-     */
-    public DiscService() {
-        this.mediaService = new MediaServiceBean();
-        this.discTransformer = new DiscTransformer();
-        this.exceptionTransformer = new ExceptionTransformer();
-        this.authserviceOutbound = new AuthserviceOutbound();
-    }
 
     /**
      * Returns a single disc.
