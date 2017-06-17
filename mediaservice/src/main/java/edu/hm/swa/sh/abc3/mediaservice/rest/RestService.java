@@ -3,6 +3,7 @@ package edu.hm.swa.sh.abc3.mediaservice.rest;
 import edu.hm.swa.sh.abc3.types.media.BookType;
 import edu.hm.swa.sh.abc3.types.media.DiscType;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -17,11 +18,17 @@ import javax.ws.rs.core.Response;
 /**
  * REST Service outbound implementation.
  */
-@Path("media")
+@Path("/media")
 @Produces(MediaType.APPLICATION_JSON)
 public class RestService {
-    private BookService bookService = new BookService();
-    private DiscService discService = new DiscService();
+    private final BookService bookService;
+    private final DiscService discService;
+
+    @Inject
+    public RestService(BookService bookService, DiscService discService) {
+        this.bookService = bookService;
+        this.discService = discService;
+    }
 
     @GET
     public String helloWorld() {

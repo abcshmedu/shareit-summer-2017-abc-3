@@ -32,7 +32,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookServiceTest {
+public class BookServiceImplTest {
     private static final int STATUS_OK = 200;
     private static final String AUTHOR = "Test Author";
     private static final String AUTHOR_2 = "Test Author 2";
@@ -53,7 +53,7 @@ public class BookServiceTest {
     @Mock
     private ExceptionTransformer exceptionTransformer;
     @InjectMocks
-    private BookService underTest;
+    private BookServiceImpl underTest;
 
     @Before
     public void setUp() {
