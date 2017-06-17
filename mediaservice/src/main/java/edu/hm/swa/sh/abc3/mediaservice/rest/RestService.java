@@ -30,6 +30,11 @@ public class RestService {
         this.discService = discService;
     }
 
+    @GET
+    public String helloWorld() {
+        return "Hello World!";
+    }
+
     /**
      * Create a new book.
      *

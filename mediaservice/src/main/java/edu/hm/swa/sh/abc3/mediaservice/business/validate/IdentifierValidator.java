@@ -2,7 +2,6 @@ package edu.hm.swa.sh.abc3.mediaservice.business.validate;
 
 import edu.hm.swa.sh.abc3.exception.InvalidIdentifierException;
 
-
 /**
  * Checks if a ISBN number is valid.
  */
