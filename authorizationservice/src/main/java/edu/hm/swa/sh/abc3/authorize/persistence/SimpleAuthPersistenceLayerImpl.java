@@ -47,84 +47,81 @@ public final class SimpleAuthPersistenceLayerImpl implements AuthPersistenceLaye
      * Init lists for static data.
      */
     public void initPersistence() {
-        if (!isInit) {
-            final Session session = sessionFactory.getCurrentSession();
-            final Transaction transaction = session.beginTransaction();
+        final Session session = sessionFactory.getCurrentSession();
+        final Transaction transaction = session.beginTransaction();
 
-            try {
-                final PermissionEntity addBook = new PermissionEntity();
-                addBook.setMethod("addBook");
-                final PermissionEntity getBook = new PermissionEntity();
-                getBook.setMethod("getBook");
-                final PermissionEntity getBooks = new PermissionEntity();
-                getBooks.setMethod("getBooks");
-                final PermissionEntity updateBooks = new PermissionEntity();
-                updateBooks.setMethod("updateBooks");
-                final PermissionEntity addDisc = new PermissionEntity();
-                addDisc.setMethod("addDisc");
-                final PermissionEntity getDisc = new PermissionEntity();
-                getDisc.setMethod("getDisc");
-                final PermissionEntity getDiscs = new PermissionEntity();
-                getDiscs.setMethod("getDiscs");
-                final PermissionEntity updateDisc = new PermissionEntity();
-                updateDisc.setMethod("updateDisc");
+        try {
+            final PermissionEntity addBook = new PermissionEntity();
+            addBook.setMethod("addBook");
+            final PermissionEntity getBook = new PermissionEntity();
+            getBook.setMethod("getBook");
+            final PermissionEntity getBooks = new PermissionEntity();
+            getBooks.setMethod("getBooks");
+            final PermissionEntity updateBooks = new PermissionEntity();
+            updateBooks.setMethod("updateBooks");
+            final PermissionEntity addDisc = new PermissionEntity();
+            addDisc.setMethod("addDisc");
+            final PermissionEntity getDisc = new PermissionEntity();
+            getDisc.setMethod("getDisc");
+            final PermissionEntity getDiscs = new PermissionEntity();
+            getDiscs.setMethod("getDiscs");
+            final PermissionEntity updateDisc = new PermissionEntity();
+            updateDisc.setMethod("updateDisc");
 
-                session.persist(addBook);
-                session.persist(getBook);
-                session.persist(getBooks);
-                session.persist(updateBooks);
-                session.persist(addDisc);
-                session.persist(getDisc);
-                session.persist(getDiscs);
-                session.persist(updateDisc);
+            session.persist(addBook);
+            session.persist(getBook);
+            session.persist(getBooks);
+            session.persist(updateBooks);
+            session.persist(addDisc);
+            session.persist(getDisc);
+            session.persist(getDiscs);
+            session.persist(updateDisc);
 
-                final UserRoleEntity adminRole = new UserRoleEntity();
-                adminRole.setName(Permission.ADMIN.name());
-                final Set<PermissionEntity> adminPermissions = new HashSet<>();
-                adminPermissions.add(addBook);
-                adminPermissions.add(getBook);
-                adminPermissions.add(getBooks);
-                adminPermissions.add(updateBooks);
-                adminPermissions.add(addDisc);
-                adminPermissions.add(getDisc);
-                adminPermissions.add(getDiscs);
-                adminPermissions.add(updateDisc);
-                adminRole.setPermissions(adminPermissions);
+            final UserRoleEntity adminRole = new UserRoleEntity();
+            adminRole.setName(Permission.ADMIN.name());
+            final Set<PermissionEntity> adminPermissions = new HashSet<>();
+            adminPermissions.add(addBook);
+            adminPermissions.add(getBook);
+            adminPermissions.add(getBooks);
+            adminPermissions.add(updateBooks);
+            adminPermissions.add(addDisc);
+            adminPermissions.add(getDisc);
+            adminPermissions.add(getDiscs);
+            adminPermissions.add(updateDisc);
+            adminRole.setPermissions(adminPermissions);
 
-                final UserRoleEntity userRole = new UserRoleEntity();
-                userRole.setName(Permission.REGISTRED.name());
-                final Set<PermissionEntity> permissions = new HashSet<>();
-                permissions.add(getBook);
-                permissions.add(getBooks);
-                permissions.add(getDisc);
-                permissions.add(getDiscs);
-                userRole.setPermissions(permissions);
+            final UserRoleEntity userRole = new UserRoleEntity();
+            userRole.setName(Permission.REGISTRED.name());
+            final Set<PermissionEntity> permissions = new HashSet<>();
+            permissions.add(getBook);
+            permissions.add(getBooks);
+            permissions.add(getDisc);
+            permissions.add(getDiscs);
+            userRole.setPermissions(permissions);
 
-                session.persist(adminRole);
-                session.persist(userRole);
+            session.persist(adminRole);
+            session.persist(userRole);
 
-                final UserEntity userAdmin = new UserEntity();
-                userAdmin.setUsername("shareitadmin");
-                userAdmin.setSecret("shareitpassword");
-                userAdmin.setUserRoleEntity(adminRole);
+            final UserEntity userAdmin = new UserEntity();
+            userAdmin.setUsername("shareitadmin");
+            userAdmin.setSecret("shareitpassword");
+            userAdmin.setUserRoleEntity(adminRole);
 
-                final UserEntity userRegistred = new UserEntity();
-                userRegistred.setUsername("shareituser");
-                userRegistred.setSecret("shareitpassword");
-                userRegistred.setUserRoleEntity(userRole);
+            final UserEntity userRegistred = new UserEntity();
+            userRegistred.setUsername("shareituser");
+            userRegistred.setSecret("shareitpassword");
+            userRegistred.setUserRoleEntity(userRole);
 
-                session.persist(userAdmin);
-                session.persist(userRegistred);
-            } catch (Exception ignored) {
-            }
-            transaction.commit();
-            isInit = true;
+            session.persist(userAdmin);
+            session.persist(userRegistred);
+        } catch (Exception ignored) {
         }
+        transaction.commit();
     }
 
     @Override
     public UserDTO getUser(final String username) {
-        initPersistence();
+//        initPersistence();
         final Session session = sessionFactory.getCurrentSession();
         final Transaction transaction = session.beginTransaction();
         Query query = session.createNamedQuery(UserEntity.FIND_BY_USERNAME, UserEntity.class);
@@ -141,7 +138,7 @@ public final class SimpleAuthPersistenceLayerImpl implements AuthPersistenceLaye
 
     @Override
     public UserDTO getUser(final long userid) {
-        initPersistence();
+//        initPersistence();
         final Session session = sessionFactory.getCurrentSession();
         final Transaction transaction = session.beginTransaction();
         final UserEntity result = session.find(UserEntity.class, userid);
@@ -151,7 +148,7 @@ public final class SimpleAuthPersistenceLayerImpl implements AuthPersistenceLaye
 
     @Override
     public void storeToken(final TokenDTO token) {
-        initPersistence();
+//        initPersistence();
         final Session session = sessionFactory.getCurrentSession();
         final Transaction transaction = session.beginTransaction();
 
@@ -168,7 +165,7 @@ public final class SimpleAuthPersistenceLayerImpl implements AuthPersistenceLaye
 
     @Override
     public void updateToken(final TokenDTO token) {
-        initPersistence();
+//        initPersistence();
         final Session session = sessionFactory.getCurrentSession();
         final Transaction transaction = session.beginTransaction();
 
@@ -182,7 +179,7 @@ public final class SimpleAuthPersistenceLayerImpl implements AuthPersistenceLaye
 
     @Override
     public TokenDTO getToken(final String token) {
-        initPersistence();
+//        initPersistence();
         final Session session = sessionFactory.getCurrentSession();
         final Transaction transaction = session.beginTransaction();
         try {
@@ -199,7 +196,7 @@ public final class SimpleAuthPersistenceLayerImpl implements AuthPersistenceLaye
 
     @Override
     public void destroyToken(final String token) {
-        initPersistence();
+//        initPersistence();
         final Session session = sessionFactory.getCurrentSession();
         final Transaction transaction = session.beginTransaction();
 
@@ -212,7 +209,7 @@ public final class SimpleAuthPersistenceLayerImpl implements AuthPersistenceLaye
 
     @Override
     public List<String> getMethodsForPermission(final Permission permission) {
-        initPersistence();
+//        initPersistence();
         final Session session = sessionFactory.getCurrentSession();
         final Transaction transaction = session.beginTransaction();
 

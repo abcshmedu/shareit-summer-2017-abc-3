@@ -23,7 +23,7 @@ public class JettyStarter {
      * @throws Exception might throw for several reasons.
      */
     public static void main(String... args) throws Exception {
-        int port = 8082;
+        int port = 8083;
         if (System.getenv("PORT") != null) {
             port = parseInt(System.getenv("PORT"));
         }

@@ -16,6 +16,7 @@
         <property name="hibernate.connection.url">jdbc:hsqldb:mem:authdb</property>
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
         <property name="transaction.auto_close_session">true</property>
+        <property name="hibernate.hbm2ddl.import_files">import.sql</property>
 
         <mapping class="edu.hm.swa.sh.abc3.authorize.persistence.entity.UserEntity"/>
         <mapping class="edu.hm.swa.sh.abc3.authorize.persistence.entity.UserRoleEntity"/>
