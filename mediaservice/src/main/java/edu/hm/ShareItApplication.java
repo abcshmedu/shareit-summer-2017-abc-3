@@ -13,6 +13,7 @@ import javax.inject.Inject;
  *
  * @author <a mailto:axel.boettcher@hm.edu>Axel B&ouml;ttcher</a>
  */
+// CHECKSTYLE:OFF
 public class ShareItApplication extends ResourceConfig {
 
     @Inject

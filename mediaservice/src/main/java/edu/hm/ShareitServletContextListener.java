@@ -11,6 +11,8 @@ import edu.hm.swa.sh.abc3.mediaservice.persistence.simplepersistence.Persistence
 import edu.hm.swa.sh.abc3.mediaservice.rest.BookService;
 import edu.hm.swa.sh.abc3.mediaservice.rest.DiscService;
 import edu.hm.swa.sh.abc3.mediaservice.rest.RestService;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  * Context Listener to enable usage of google guice together with jersey.
@@ -27,6 +29,7 @@ public class ShareitServletContextListener extends GuiceServletContextListener {
             bind(BookService.class);
             bind(DiscService.class);
             bind(PersistenceLayer.class).to(PersistenceLayerBean.class);
+            bind(SessionFactory.class).toInstance(new Configuration().configure().buildSessionFactory());
         }
     });
 

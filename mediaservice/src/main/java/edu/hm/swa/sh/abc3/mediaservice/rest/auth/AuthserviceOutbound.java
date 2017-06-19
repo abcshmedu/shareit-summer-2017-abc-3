@@ -14,6 +14,8 @@ import javax.ws.rs.core.Response;
  * AuthserviceOutbound.
  */
 public class AuthserviceOutbound {
+    private static final int OK_RESPONSE_CODE = 200;
+
     /**
      * Validate token and authorize method.
      *
@@ -35,7 +37,7 @@ public class AuthserviceOutbound {
         final ValidateTokenResponse response = rawResponse.readEntity(ValidateTokenResponse.class);
         rawResponse.close();
 
-        if (response.getCode() != 200) {
+        if (response.getCode() != OK_RESPONSE_CODE) {
             throw new AuthException(response.getMessage(), response.getCode());
         }
     }

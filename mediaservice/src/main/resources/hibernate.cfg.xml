@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+        <property name="hibernate.archive.autodetection">class,hbm</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password">1</property>
+        <property name="hibernate.connection.url">jdbc:hsqldb:mem:howtodoinjava</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="transaction.auto_close_session">true</property>
+
+        <mapping class="edu.hm.swa.sh.abc3.mediaservice.persistence.entity.BookEntity"/>
+        <mapping class="edu.hm.swa.sh.abc3.mediaservice.persistence.entity.DiscEntity"/>
+    </session-factory>
+
+</hibernate-configuration>

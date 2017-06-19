@@ -26,11 +26,6 @@ public class RestService {
     @Inject
     private DiscService discService;
 
-    @GET
-    public String helloWorld() {
-        return "Hello World!";
-    }
-
     /**
      * Create a new book.
      *
