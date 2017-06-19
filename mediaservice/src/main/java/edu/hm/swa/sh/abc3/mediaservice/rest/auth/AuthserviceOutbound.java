@@ -24,8 +24,8 @@ public class AuthserviceOutbound {
      * @throws AuthException AuthException.
      */
     public void validateToken(final String token, final String method) throws AuthException {
-        final String uri = "http://localhost:8083/auth/validate";
-//        final String uri = "https://fast-basin-46958.herokuapp.com/auth/validate";
+//        final String uri = "http://localhost:8083/auth/validate";
+        final String uri = "https://fast-basin-46958.herokuapp.com/auth/validate";
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(uri);
 
