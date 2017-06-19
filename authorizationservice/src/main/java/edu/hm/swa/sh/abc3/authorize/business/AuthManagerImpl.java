@@ -4,12 +4,12 @@ import edu.hm.swa.sh.abc3.authorize.common.CredentialsDTO;
 import edu.hm.swa.sh.abc3.authorize.common.TokenDTO;
 import edu.hm.swa.sh.abc3.authorize.common.UserDTO;
 import edu.hm.swa.sh.abc3.authorize.persistence.AuthPersistenceLayer;
-import edu.hm.swa.sh.abc3.authorize.persistence.SimpleAuthPersistenceLayerImpl;
 import edu.hm.swa.sh.abc3.exception.InvalidCredentialsException;
 import edu.hm.swa.sh.abc3.exception.InvalidTokenException;
 import edu.hm.swa.sh.abc3.exception.UnauthorizedAccessException;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,7 +18,8 @@ import java.util.UUID;
  */
 public class AuthManagerImpl implements AuthManager {
     protected static final long TOKEN_TTL = 1_800_000;
-    private AuthPersistenceLayer persistenceLayer = SimpleAuthPersistenceLayerImpl.getInstance();
+    @Inject
+    private AuthPersistenceLayer persistenceLayer;
 
     @Override
     public TokenDTO loginUser(final CredentialsDTO credentials) throws InvalidCredentialsException {

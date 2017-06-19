@@ -1,4 +1,4 @@
-package edu.hm.swa.sh.abc3.authorize;
+package edu.hm;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -29,6 +29,7 @@ public class JettyStarter {
         }
         Server jetty = new Server(port);
         jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
+        new ShareitServletContextListener();
         jetty.start();
         System.out.println("Jetty listening on port " + port);
         jetty.join();

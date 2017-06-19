@@ -7,6 +7,7 @@ import edu.hm.swa.sh.abc3.generated.types.LogoutResponse;
 import edu.hm.swa.sh.abc3.generated.types.ValidateTokenRequest;
 import edu.hm.swa.sh.abc3.generated.types.ValidateTokenResponse;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,7 +21,8 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ServicePort {
-    private AuthenticationService authenticationService = new AuthenticationService();
+    @Inject
+    private AuthenticationService authenticationService;
 
     /**
      * Login the user.
