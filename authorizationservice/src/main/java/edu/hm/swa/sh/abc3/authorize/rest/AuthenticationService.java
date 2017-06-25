@@ -1,7 +1,6 @@
 package edu.hm.swa.sh.abc3.authorize.rest;
 
 import edu.hm.swa.sh.abc3.authorize.business.AuthManager;
-import edu.hm.swa.sh.abc3.authorize.business.AuthManagerImpl;
 import edu.hm.swa.sh.abc3.authorize.common.CredentialsDTO;
 import edu.hm.swa.sh.abc3.authorize.common.TokenDTO;
 import edu.hm.swa.sh.abc3.exception.BaseException;
@@ -16,20 +15,17 @@ import edu.hm.swa.sh.abc3.generated.types.MessageResponse;
 import edu.hm.swa.sh.abc3.generated.types.ValidateTokenRequest;
 import edu.hm.swa.sh.abc3.generated.types.ValidateTokenResponse;
 
+import javax.inject.Inject;
+
 /**
  * AuthenticationService.
  */
 public class AuthenticationService {
+    @Inject
     private AuthManager authenticationManager;
+
     private static final int CODE_OK = 200;
     private static final String MESSAGE_OK = "OK";
-
-    /**
-     * Cstr.
-     */
-    public AuthenticationService() {
-        this.authenticationManager = new AuthManagerImpl();
-    }
 
     /**
      * Login user.
@@ -97,6 +93,7 @@ public class AuthenticationService {
 
     /**
      * Prepares a response to state ok.
+     *
      * @param response Response.
      */
     private void prepareOkResponse(final MessageResponse response) {
